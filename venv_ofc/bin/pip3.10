@@ -1,5 +1,5 @@
 #!/bin/sh
-'''exec' "/home/gustavoluz/Área de Trabalho/Projects/Oficina_Brenno/Oficina-brenno/venv_ofc/bin/python" "$0" "$@"
+'''exec' "/home/gustavoluz/Área de Trabalho/Projects/Oficina-brenno/venv_ofc/bin/python3" "$0" "$@"
 ' '''
 # -*- coding: utf-8 -*-
 import re
