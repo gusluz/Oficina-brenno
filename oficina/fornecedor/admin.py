@@ -1,3 +1,9 @@
 from django.contrib import admin
+from .models import Fornecedor
 
-# Register your models here.
+
+class FornecedorModelAdmin(admin.ModelAdmin):
+    list_display = ['nome', 'cpf_cnpj', 'criado_em']
+
+
+admin.site.register(Fornecedor, FornecedorModelAdmin)

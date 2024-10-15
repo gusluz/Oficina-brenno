@@ -6,7 +6,7 @@ from .estados_choices import *
 class Cliente(models.Model):
     
     nome = models.CharField('NOME', max_length=255)
-    cpf = models.CharField('CPF', max_length=14, validators=[validate_cpf])
+    cpf_cnpj = models.CharField('CPF', max_length=18, validators=[validate_cpf_cnpj])
     data_nascimento = models.DateField('NASCIDO EM')
     telefone = models.CharField('TELEFONE 1', max_length=20, validators=[validate_phone])
     telefone2 = models.CharField('TELEFONE 2', max_length=20, validators=[validate_phone], blank=True)
@@ -28,9 +28,9 @@ class Cliente(models.Model):
 
 
     def __str__(self) -> str:
-        return self.name
+        return self.nome
 
 
     def save(self, *args, **kwargs):
-        self.cpf = format_cpf(self.cpf)
+        self.cpf = validate_cpf_cnpj(self.cpf)
         super(Cliente, self).save(*args, **kwargs)

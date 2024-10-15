@@ -7,7 +7,7 @@ class Fornecedor(models.Model):
     nome = models.CharField('NOME', max_length=255)
 
     # criar validator CNPJ
-    cpf = models.CharField('CPF', max_length=14, validators=[validate_cpf])
+    cpf_cnpj = models.CharField('CPF/CNPJ', max_length=18, validators=[validate_cpf_cnpj])
 
     telefone = models.CharField('TELEFONE 1', max_length=20, validators=[validate_phone])
     telefone2 = models.CharField('TELEFONE 2', max_length=20, validators=[validate_phone], blank=True)
@@ -29,9 +29,9 @@ class Fornecedor(models.Model):
 
 
     def __str__(self) -> str:
-        return self.name
+        return self.nome
 
 
     def save(self, *args, **kwargs):
-        self.cpf = format_cpf(self.cpf)
+        self.cpf_cnpj = validate_cpf_cnpj(self.cpf_cnpj)
         super(Fornecedor, self).save(*args, **kwargs)
