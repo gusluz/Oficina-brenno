@@ -32,5 +32,5 @@ class Cliente(models.Model):
 
 
     def save(self, *args, **kwargs):
-        self.cpf = validate_cpf_cnpj(self.cpf)
+        self.cpf_cnpj = validate_cpf_cnpj(self.cpf_cnpj)
         super(Cliente, self).save(*args, **kwargs)
