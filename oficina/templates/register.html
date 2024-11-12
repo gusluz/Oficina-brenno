@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Conta - Ciclo Motos</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+    <div class="w-full max-w-xs">
+        <form class="bg-gray-800 shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <h2 class="text-white text-center text-xl font-bold mb-6">Criar conta</h2>
+            
+            <!-- Campo Nome Completo -->
+            <div class="mb-4">
+                <label class="block text-gray-300 text-sm font-bold mb-2" for="nome">
+                    Nome completo
+                </label>
+                <div class="flex items-center bg-white rounded-md">
+                    <i class="fas fa-user text-gray-500 pl-3"></i>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="nome" type="text" placeholder="Nome completo">
+                </div>
+            </div>
+
+            <!-- Campo Email -->
+            <div class="mb-4">
+                <label class="block text-gray-300 text-sm font-bold mb-2" for="email">
+                    E-mail
+                </label>
+                <div class="flex items-center bg-white rounded-md">
+                    <i class="fas fa-envelope text-gray-500 pl-3"></i>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="email" placeholder="E-mail">
+                </div>
+            </div>
+
+            <!-- Campo Crie sua Senha -->
+            <div class="mb-4">
+                <label class="block text-gray-300 text-sm font-bold mb-2" for="senha">
+                    Crie sua senha
+                </label>
+                <div class="flex items-center bg-white rounded-md">
+                    <i class="fas fa-lock text-gray-500 pl-3"></i>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="senha" type="password" placeholder="Crie sua senha">
+                </div>
+            </div>
+
+            <!-- Campo Confirme sua Senha -->
+            <div class="mb-4">
+                <label class="block text-gray-300 text-sm font-bold mb-2" for="confirmarSenha">
+                    Confirme sua senha
+                </label>
+                <div class="flex items-center bg-white rounded-md">
+                    <i class="fas fa-lock text-gray-500 pl-3"></i>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="confirmarSenha" type="password" placeholder="Confirme sua senha">
+                </div>
+            </div>
+
+            <!-- Botão Criar Conta -->
+            <div class="flex items-center justify-center mb-4">
+                <button class="bg-white hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+                    Entrar <i class="fas fa-sign-in-alt"></i>
+                </button>
+            </div>
+
+            <!-- Botão Voltar -->
+            <div class="text-center">
+                <button class="text-gray-300 hover:text-gray-100 text-sm" type="button" onclick="window.location.href='login.html'">
+                    <i class="fas fa-arrow-left"></i> Voltar para Login
+                </button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

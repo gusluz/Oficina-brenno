@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'fornecedor',
     'ordem_servico',
     'veiculo',
-    
 ]
 
 MIDDLEWARE = [
