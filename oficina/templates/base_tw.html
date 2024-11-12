@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
 </head>
+
+{% if user.is_authenticated %}
+
 <body>
 <div id="app" class="flex h-screen">
     <!-- Sidebar -->
@@ -31,7 +34,7 @@
 
                 <!-- Ordens de Serviços (Engrenagem) -->
                 <li class="flex items-center p-2 hover:bg-gray-700">
-                    <a href="#">
+                    <a href="admin/ordem_servico/os/">
                     <i class="fas fa-cogs w-6 h-6"></i>
                     <span :class="sidebarOpen ? 'inline' : 'hidden'" class="ml-2">Ordens de Serviços<span>
                     </a>
@@ -55,7 +58,7 @@
 
                 <!-- Clientes (Boneco) -->
                 <li class="flex items-center p-2 hover:bg-gray-700">
-                    <a href="#">
+                    <a href="admin/cliente/cliente/">
                     <i class="fas fa-user w-6 h-6"></i>
                     <span :class="sidebarOpen ? 'inline' : 'hidden'" class="ml-2">Clientes</span>
                     </a>
@@ -63,7 +66,7 @@
 
                 <!-- Fornecedores (Dois Bonecos) -->
                 <li class="flex items-center p-2 hover:bg-gray-700">
-                    <a href="#">
+                    <a href="admin/fornecedor/fornecedor/">
                     <i class="fas fa-users w-6 h-6"></i>
                     <span :class="sidebarOpen ? 'inline' : 'hidden'" class="ml-2">Fornecedores</span>
                     </a>
@@ -71,7 +74,7 @@
 
                 <!-- Perfil (Boneco) -->
                 <li class="flex items-center p-2 hover:bg-gray-700">
-                    <a href="#">
+                    <a href="/accounts/password_change/">
                     <i class="fas fa-user-circle w-6 h-6"></i>
                     <span :class="sidebarOpen ? 'inline' : 'hidden'" class="ml-2">Perfil</span>
                     </a>
@@ -79,7 +82,7 @@
 
                 <!-- Sair -->
                 <li class="flex items-center p-2 hover:bg-gray-700">
-                    <a href="#">
+                    <a href="{% url 'logout' %}">
                     <i class="fas fa-sign-out-alt w-6 h-6"></i>
                     <span :class="sidebarOpen ? 'inline' : 'hidden'" class="ml-2">Sair</span>
                     </a>
@@ -90,7 +93,11 @@
 
     <!-- Conteúdo Principal -->
     <div class="flex-1 p-6 bg-gray-100">
-        <h1 class="text-2xl font-semibold">Conteúdo da Tela</h1>
+        <h1 class="text-2xl font-semibold">
+            {% if user.is_authenticated %}
+			    Olá, {{user.first_name}} 
+		    {% endif %}
+        </h1>
         <!-- Conteúdo específico da aplicação -->
     </div>
 </div>
@@ -103,5 +110,11 @@ new Vue({
     }
 });
 </script>
+
+{% else %}
+<p>Você não está logado, por favor faça Login</p>
+<a href="{% url 'login' %}">Login</a>
+{% endif %}
+
 </body>
 </html>
