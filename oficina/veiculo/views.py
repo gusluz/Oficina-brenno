@@ -2,6 +2,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Veiculo
 from .forms import VeiculoForm
+from cliente.models import Cliente
 
 class VeiculoListView(ListView):
     model = Veiculo
@@ -19,11 +20,23 @@ class VeiculoCreateView(CreateView):
     template_name = 'veiculo_form.html'
     success_url = reverse_lazy('veiculo_list')
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Adiciona os dados extras para o template
+        context['clientes'] = Cliente.objects.all()
+        return context
+
 class VeiculoUpdateView(UpdateView):
     model = Veiculo
     form_class = VeiculoForm
-    template_name = 'veiculo_form.html'
+    template_name = 'veiculo_edit.html'
     success_url = reverse_lazy('veiculo_list')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Adiciona todos os clientes e veículos ao contexto
+        context['clientes'] = Cliente.objects.all()
+        return context
 
 class VeiculoDeleteView(DeleteView):
     model = Veiculo

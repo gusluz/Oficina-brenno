@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+    {% block title %}Minha Aplicação{% endblock %}
+
+{% block content %}
+
+<div class="w-full max-w-4xl bg-white rounded shadow-md p-6">
+    <h2 class="text-xl font-bold mb-6 text-center">Edição de Fornecedor</h2>
+    <!-- Formulário de Cadastro -->
+    <form  method="POST">
+        {% csrf_token %}
+        <div class="grid grid-cols-1 gap-6">
+            <!-- Nome -->
+            <div>
+                <label for="nome" class="block font-bold text-gray-700">Nome:</label>
+                <input type="text" id="nome" name="nome" value="{{fornecedor.nome}}" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
+            </div>
+            <!-- CPF -->
+            <div>
+                <label for="cpf" class="block font-bold text-gray-700">CPF/CNPJ:</label>
+                <input type="text" id="cpf/cnpj" name="cpf_cnpj" value="{{fornecedor.cpf_cnpj}}" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
+            </div>
+            <!-- Telefone 1 -->
+            <div>
+                <label for="telefone1" class="block font-bold text-gray-700">Telefone 1:</label>
+                <input type="tel" id="telefone1" name="telefone" value="{{fornecedor.telefone}}" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
+            </div>
+            <!-- Telefone 2 -->
+            <div>
+                <label for="telefone2" class="block font-bold text-gray-700">Telefone 2:</label>
+                <input type="tel" id="telefone2" name="telefone2" value="{{fornecedor.telefone2}}" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
+            </div>
+            <!-- Email -->
+            <div>
+                <label for="email" class="block font-bold text-gray-700">Email:</label>
+                <input type="email" id="email" name="email" value="{{fornecedor.email}}" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
+            </div>
+            <!-- CEP -->
+            <div>
+                <label for="cep" class="block font-bold text-gray-700">CEP:</label>
+                <input type="text" id="cep" name="endereco_cep" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
+            </div>
+            <!-- Endereço -->
+            <div>
+                <label for="endereco" class="block font-bold text-gray-700">Endereço:</label>
+                <input type="text" id="endereco" name="endereco_logradouro" value="{{fornecedor.endereco_logradouro}}" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
+            </div>
+            <!-- Número -->
+            <div>
+                <label for="numero" class="block font-bold text-gray-700">Número:</label>
+                <input type="text" id="numero" name="endereco_numero" value="{{fornecedor.endereco_numero}}" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
+            </div>
+            <!-- Bairro -->
+            <div>
+                <label for="bairro" class="block font-bold text-gray-700">Bairro:</label>
+                <input type="text" id="bairro" name="endereco_bairro" value="{{fornecedor.endereco_bairro}}" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
+            </div>
+            <!-- Cidade -->
+            <div>
+                <label for="cidade" class="block font-bold text-gray-700">Cidade:</label>
+                <input type="text" id="cidade" name="endereco_cidade" value="{{fornecedor.endereco_cidade}}" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
+            </div>
+            <!-- Estado -->
+            <div>
+                <label for="estado" class="block font-bold text-gray-700">Estado:</label>
+                <select id="estado" name="endereco_estado"  class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
+                    <option value="{{fornecedor.endereco_estado}}" selected>{{fornecedor.endereco_estado}}</option>
+                    <option>AC</option>
+                    <option>AL</option>
+                    <option>AP</option>
+                    <option>AM</option>
+                    <option>BA</option>
+                    <option>CE</option>
+                    <option>DF</option>
+                    <option>ES</option>
+                    <option>GO</option>
+                    <option>MA</option>
+                    <option>MT</option>
+                    <option>MS</option>
+                    <option>MG</option>
+                    <option>PA</option>
+                    <option>PB</option>
+                    <option>PR</option>
+                    <option>PE</option>
+                    <option>PI</option>
+                    <option>RJ</option>
+                    <option>RN</option>
+                    <option>RS</option>
+                    <option>RO</option>
+                    <option>RR</option>
+                    <option>SC</option>
+                    <option>SP</option>
+                    <option>SE</option>
+                    <option>TO</option>
+                </select>
+            </div>
+            <!-- Complemento -->
+            <div>
+                <label for="complemento" class="block font-bold text-gray-700">Complemento:</label>
+                <input type="text" id="complemento" name="endereco_complemento" value="{{fornecedor.endereco_complemento}}" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
+            </div>
+            <!-- Observações -->
+            <div>
+                <label for="observacoes" class="block font-bold text-gray-700">Observações:</label>
+                <textarea id="observacoes" name="observacao" value="{{fornecedor.observacao}}" rows="4" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring"></textarea>
+            </div>
+        </div>
+        <!-- Botões -->
+        <div class="mt-6 flex justify-between">
+            <a href="/fornecedor/" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Cancelar</a>
+            <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Salvar</button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

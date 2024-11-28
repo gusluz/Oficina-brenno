@@ -8,7 +8,7 @@ class OS(models.Model):
     veiculo = models.ManyToManyField(Veiculo, verbose_name='Veiculo do Cliente')
     foto_inicio = models.ImageField(upload_to='images/', blank=True, verbose_name='Foto do veiculo antes da OS')
     data_inicio = models.DateTimeField(auto_now_add=True, null=False, blank=False, verbose_name="Data de inicio")
-    data_fim = models.DateTimeField(null=True, verbose_name="Data de entrega")
+    data_fim = models.DateTimeField(null=True, blank=True, verbose_name="Data de entrega")
     foto_fim = models.ImageField(upload_to='images/', blank=True, null=True, verbose_name='Foto do veiculo depois da OS')
     codigo = models.CharField(max_length=100, unique=True)
     produtos_utilizados = models.ManyToManyField(Produto, verbose_name='Produtos Utilizados')

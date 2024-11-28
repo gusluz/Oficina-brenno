@@ -22,7 +22,7 @@ class FornecedorCreateView(CreateView):
 class FornecedorUpdateView(UpdateView):
     model = Fornecedor
     form_class = FornecedorForm
-    template_name = 'fornecedor_form.html'
+    template_name = 'fornecedor_edit.html'
     success_url = reverse_lazy('fornecedor_list')
 
 class FornecedorDeleteView(DeleteView):

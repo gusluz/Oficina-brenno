@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+
+{% block title %}{% endblock  %}
+
+{% block content %}
+
+<div class="w-full max-w-4xl bg-white rounded shadow-md p-6">
+    <h2 class="text-xl font-bold mb-6 text-center">Editar Produto</h2>
+    <!-- Formulário de Cadastro -->
+    <form method="POST">
+        {% csrf_token %}
+        <div class="grid grid-cols-1  gap-6">
+<!-- Nome do Fornecedor  -->
+<div class="flex items-center">
+    <label for="fornecedor" class="w-1/3 font-bold text-gray-700">Fornecedor:</label>
+    <select id="fornecedor" name="fornecedor" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
+        <option value="" disabled>Selecione um fornecedor</option>
+        {% for fornecedor in fornecedores %}
+            <option value="{{ fornecedor.id }}" {% if fornecedor.id == object.fornecedor.id %}selected{% endif %}>
+                {{ fornecedor.nome }}
+            </option>
+        {% endfor %}
+    </select>
+</div>
+            <!-- Código -->
+            <div>
+                <label class="block font-bold text-gray-700">Código:</label>
+                <input type="text" name="codigo" value="{{produto.codigo}}" 
+                    class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <!-- Nome -->
+            <div>
+                <label class="block font-bold text-gray-700">Nome:</label>
+                <input type="text" name="nome" value="{{produto.nome}}" 
+                    class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <!-- Descrição -->
+            <div>
+                <label class="block font-bold text-gray-700">Descrição:</label>
+                <input type="text" name="descricao" value="{{produto.descricao}}" 
+                    class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <!-- Valor -->
+            <div>
+                <label class="block font-bold text-gray-700">Valor:</label>
+                <input type="text" name="valor" value="{{produto.valor}}" 
+                    class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <!-- Outras Despesas -->
+            <div>
+                <label class="block font-bold text-gray-700">Outras Despesas:</label>
+                <input type="text" name="outras_despesas" value="{{produto.outras_despesas}}" 
+                    class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <!-- Custo Final -->
+            <div>
+                <label class="block font-bold text-gray-700">Custo Final:</label>
+                <input type="text" name="custo_final" value="{{produto.custo_final}}" 
+                    class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <!-- Lucro -->
+            <div>
+                <label class="block font-bold text-gray-700">Lucro:</label>
+                <input type="text" name="lucro" value="{{produto.lucro}}" 
+                    class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <!-- Valor de Venda -->
+            <div>
+                <label class="block font-bold text-gray-700">Valor de Venda:</label>
+                <input type="text" name="valor_venda" value="{{produto.valor_venda}}" 
+                    class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <!-- Quantidade Mínima -->
+            <div>
+                <label class="block font-bold text-gray-700">Qtd. Mínima:</label>
+                <input type="number" name="qtd_minima" value="{{produto.qtd_minima}}" 
+                    class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <!-- Quantidade Máxima -->
+            <div>
+                <label class="block font-bold text-gray-700">Qtd. Máxima:</label>
+                <input type="number" name="qtd_maxima" value="{{produto.qtd_maxima}}" 
+                    class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+            <!-- Quantidade Atual -->
+            <div>
+                <label class="block font-bold text-gray-700">Qtd. Atual:</label>
+                <input type="number" name="qtd_atual" value="{{produto.qtd_atual}}" 
+                    class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-blue-500">
+            </div>
+        </div>
+        <!-- Botões -->
+        <div class="mt-6 flex justify-between">
+            <a href="/produtos/" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Cancelar</a>
+            <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Salvar</button>
+        </div>
+    </form>
+</div>
+
+
+{% endblock  %}

@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+    {% block title %}Minha Aplicação{% endblock %}
+
+{% block content %}
+
+<div class="w-full max-w-4xl bg-white rounded shadow-md p-6">
+    <h2 class="text-xl font-bold mb-6 text-center">Adicionar Veículo</h2>
+    <!-- Formulário de Cadastro -->
+    <form method="POST">
+        {% csrf_token %}
+        <div class="grid grid-cols-1  gap-6">
+            <!-- CLiente -->
+            <div class="flex items-center">
+                <label for="cliente" class="w-1/3 font-bold text-gray-700">Cliente:</label>
+                <select id="cliente" name="cliente_nome" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
+                    <option value="" disabled selected>Selecione um cliente</option>
+                    {% for cliente in clientes %}
+                        <option value="{{ cliente.id }}">{{ cliente.nome }}</option>
+                    {% endfor %}
+                </select>
+                <button type="button" class="ml-2 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
+            <!-- Modelo -->
+            <div>
+                <label for="modelo" class="block font-bold text-gray-700">Modelo:</label>
+                <input type="text" id="modelo" name="modelo" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
+            </div>
+            <!-- Marca -->
+            <div>
+                <label for="marca" class="block font-bold text-gray-700">Marca:</label>
+                <input type="text" id="marca" name="marca" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
+            </div>
+            <!-- Cor -->
+            <div>
+                <label for="cor" class="block font-bold text-gray-700">Cor:</label>
+                <input type="text" id="cor" name="cor" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
+            </div>
+            <!-- Ano -->
+            <div>
+                <label for="ano" class="block font-bold text-gray-700">Ano:</label>
+                <input type="text" id="ano" name="ano" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
+            </div>
+            <!-- Placa -->
+            <div>
+                <label for="placa" class="block font-bold text-gray-700">Placa:</label>
+                <input type="text" id="placa" name="placa" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
+            </div>
+            <!-- Upload de Imagem -->
+<div>
+<label for="imagem" class="block font-bold text-gray-700">Imagem do Produto:</label>
+<div class="flex items-center">
+    <label 
+        for="imagem" 
+        class="cursor-pointer w-full py-2 px-3 border border-dashed border-gray-400 rounded-lg shadow text-gray-500 text-center hover:border-blue-500 hover:text-blue-500 transition">
+        Clique para selecionar uma imagem
+    </label>
+    <input 
+        type="file" 
+        id="imagem" 
+        name="foto_veiculo" 
+        class="hidden" 
+        accept="image/*">
+</div>
+</div>
+        </div>
+        <!-- Botões -->
+        <div class="mt-6 flex justify-end">
+            <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                Salvar
+            </button>
+        </div>
+    </form>
+</div>
+
+
+{% endblock %}
+
