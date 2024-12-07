@@ -7,4 +7,5 @@ urlpatterns = [
     path('ordem_servico/novo/', OSCreateView.as_view(), name='os_form'),
     path('ordem_servico/<int:pk>/editar/', OSUpdateView.as_view(), name='os_edit'),
     path('ordem_servico/<int:pk>/excluir/', OSDeleteView.as_view(), name='os_confirm_delete'),
+    
 ]

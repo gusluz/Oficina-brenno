@@ -17,9 +17,18 @@
 
         <!-- Veiculo -->
         <div>
-            <label class="block font-bold text-gray-700">Veiculo:</label>
-            <p class="py-2 px-3 border rounded-lg shadow bg-gray-100">{{object.veiculo}}</p>
-        </div>
+            <label class="block font-bold text-gray-700">Veículos:</label>
+            <ul class="py-2 px-3 border rounded-lg shadow bg-gray-100">
+              {% for veiculo in ordens_servico.veiculo.all %}
+                <li>{{ veiculo.nome }}</li>
+                {% if veiculo.foto_veiculo %}
+                  <img src="{{ veiculo.foto_veiculo.url }}" alt="Foto do Veículo" class="rounded-lg">
+                {% endif %}
+              {% empty %}
+                <li>Nenhum veículo associado.</li>
+              {% endfor %}
+            </ul>
+          </div>
 
         <!-- Imagem do Veículo no inicio -->
         <div>

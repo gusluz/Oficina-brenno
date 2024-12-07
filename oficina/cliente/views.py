@@ -8,6 +8,13 @@ class ClienteListView(ListView):
     template_name = 'cliente_list.html'
     context_object_name = 'clientes'
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        search_query = self.request.GET.get('search', '')
+        if search_query:
+            queryset = queryset.filter(nome__icontains=search_query)
+        return queryset
+
 class ClienteDetailView(DetailView):
     model = Cliente
     template_name = 'cliente_detail.html'

@@ -9,6 +9,13 @@ class ProdutoListView(ListView):
     template_name = 'produto_list.html'
     context_object_name = 'produtos'
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        search_query = self.request.GET.get('search', '')
+        if search_query:
+            queryset = queryset.filter(nome__icontains=search_query)
+        return queryset
+
 class ProdutoDetailView(DetailView):
     model = Produto
     template_name = 'produto_detail.html'
@@ -23,7 +30,7 @@ class ProdutoCreateView(CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # Adiciona os fornecedores ao contexto
-        context['fornecedor'] = Fornecedor.objects.all()
+        context['fornecedores'] = Fornecedor.objects.all()
         return context
 
 class ProdutoUpdateView(UpdateView):

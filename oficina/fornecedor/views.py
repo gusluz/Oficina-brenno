@@ -3,10 +3,18 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from .models import Fornecedor
 from .forms import FornecedorForm
 
+
 class FornecedorListView(ListView):
     model = Fornecedor
     template_name = 'fornecedor_list.html'
     context_object_name = 'fornecedores'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        search_query = self.request.GET.get('search', '')
+        if search_query:
+            queryset = queryset.filter(nome__icontains=search_query)
+        return queryset
 
 class FornecedorDetailView(DetailView):
     model = Fornecedor

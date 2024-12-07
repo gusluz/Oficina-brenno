@@ -11,6 +11,16 @@ class OSListView(ListView):
     template_name = 'os_list.html'
     context_object_name = 'ordem_servico'
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        search_query = self.request.GET.get('search', '')
+        if search_query:
+            # Usando o campo cliente_nome diretamente
+            queryset = queryset.filter(cliente_nome__icontains=search_query)
+        return queryset
+
+
+
 class OSDetailView(DetailView):
     model = OS
     template_name = 'os_detail.html'

@@ -7,14 +7,33 @@
 <div class="w-full max-w-5xl bg-white rounded shadow-md p-6">
     <h2 class="text-xl font-bold mb-6 text-center">Gerenciamento de Fornecedores</h2>
 
-    <!-- Botões de Ação -->
-    <div class="flex justify-between mb-6">
-        <button class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline flex items-center">
-            <a href="fornecedor/novo/">
+    <!-- Botões de Ação e Campo de Pesquisa -->
+<div class="flex justify-between items-center mb-6">
+    <!-- Botão Adicionar Fornecedor -->
+    <button class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline flex items-center">
+        <a href="fornecedor/novo/">
             <i class="fas fa-plus mr-2"></i> Adicionar Fornecedor
-            </a>
+        </a>
+    </button>
+
+    <!-- Campo de Pesquisa -->
+    <form method="GET" action="{% url 'fornecedor_list' %}" class="w-full max-w-sm flex items-center">
+        <input
+            type="text"
+            name="search"
+            placeholder="Pesquisar Fornecedor..."
+            class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring"
+            value="{{ request.GET.search|default:'' }}"
+        />
+        <button
+            type="submit"
+            class="ml-2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        >
+            <i class="fas fa-search"></i>
         </button>
-    </div>
+    </form>
+</div>
+
 
     <!-- Tabela de Fornecedor -->
     <div class="overflow-x-auto">
