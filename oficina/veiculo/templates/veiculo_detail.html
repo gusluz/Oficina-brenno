@@ -46,13 +46,15 @@
         </div>
 
         <!-- Imagem do Veículo -->
-        <div>
-            <label class="block font-bold text-gray-700">{{veiculo.foto_veiculo}}</label>
-            <div class="border border-dashed border-gray-400 rounded-lg shadow p-3 text-center">
-                <img src="{{veiculo.foto_veiculo}}" alt="Imagem do Veículo" class="mx-auto rounded-lg">
-            </div>
-        </div>
+    <div>
+        <label class="font-bold">Imagem do Veículo</label>
+        {% if veiculo.foto_veiculo %}
+            <img src="{{ veiculo.foto_veiculo.url }}" alt="Imagem do Veículo" class="w-64 h-64 object-cover border rounded-lg shadow-md">
+        {% else %}
+            <p>Imagem não disponível</p>
+        {% endif %}
     </div>
+    
 
     <!-- Botão Voltar -->
     <div class="mt-6 flex justify-end">

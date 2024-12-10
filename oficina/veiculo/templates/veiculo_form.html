@@ -7,7 +7,7 @@
 <div class="w-full max-w-4xl bg-white rounded shadow-md p-6">
     <h2 class="text-xl font-bold mb-6 text-center">Adicionar Veículo</h2>
     <!-- Formulário de Cadastro -->
-    <form method="POST">
+    <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="grid grid-cols-1  gap-6">
             <!-- CLiente -->
@@ -50,7 +50,7 @@
             </div>
             <!-- Upload de Imagem -->
 <div>
-<label for="imagem" class="block font-bold text-gray-700">Imagem do Produto:</label>
+<label for="imagem" class="block font-bold text-gray-700">Imagem do Veiculo:</label>
 <div class="flex items-center">
     <label 
         for="imagem" 

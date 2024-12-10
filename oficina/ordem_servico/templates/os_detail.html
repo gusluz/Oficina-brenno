@@ -32,10 +32,12 @@
 
         <!-- Imagem do Veículo no inicio -->
         <div>
-            <label class="block font-bold text-gray-700">{{ordens_servico.foto_inicio}}</label>
-            <div class="border border-dashed border-gray-400 rounded-lg shadow p-3 text-center">
-                <img src="{{ordens_servico.foto_inicio}}" alt="Imagem do Veículo" class="mx-auto rounded-lg">
-            </div>
+            <label class="font-bold">Imagem do Veículo no inicio</label>
+            {% if ordens_servico.foto_inicio %}
+                <img src="{{ ordens_servico.foto_inicio.url }}" alt="Imagem do Veículo no inicio" class="w-64 h-64 object-cover border rounded-lg shadow-md">
+            {% else %}
+                <p>Imagem não disponível</p>
+            {% endif %}
         </div>
 
         <!-- Data inicio -->
@@ -52,10 +54,12 @@
 
         <!-- Imagem do Veículo no fim -->
         <div>
-            <label class="block font-bold text-gray-700">{{ordens_servico.foto_fim}}</label>
-            <div class="border border-dashed border-gray-400 rounded-lg shadow p-3 text-center">
-                <img src="{{ordens_servico.foto_fim}}" alt="Imagem do Veículo" class="mx-auto rounded-lg">
-            </div>
+            <label class="font-bold">Imagem do Veículo no fim</label>
+            {% if ordens_servico.foto_fim %}
+                <img src="{{ ordens_servico.foto_fim.url }}" alt="Imagem do Veículo no fim" class="w-64 h-64 object-cover border rounded-lg shadow-md">
+            {% else %}
+                <p>Imagem não disponível</p>
+            {% endif %}
         </div>
 
         <!-- Codigo -->
@@ -96,16 +100,17 @@
 
         <!-- Imagem do Veículo -->
         <div>
-            <label class="block font-bold text-gray-700">{{veiculo.foto_veiculo}}</label>
-            <div class="border border-dashed border-gray-400 rounded-lg shadow p-3 text-center">
-                <img src="{{veiculo.foto_veiculo}}" alt="Imagem do Veículo" class="mx-auto rounded-lg">
-            </div>
+            <label class="font-bold">Imagem do Veículo</label>
+            {% if veiculo.foto_veiculo %}
+                <img src="{{ veiculo.foto_veiculo.url }}" alt="Imagem do Veículo" class="w-64 h-64 object-cover border rounded-lg shadow-md">
+            {% else %}
+                <p>Imagem não disponível</p>
+            {% endif %}
         </div>
-    </div>
 
     <!-- Botão Voltar -->
     <div class="mt-6 flex justify-end">
-        <a href="/ordens_servico" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+        <a href="/ordem_servico" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
             Voltar
         </a>
     </div>

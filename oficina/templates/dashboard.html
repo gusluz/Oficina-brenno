@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Minha Aplicação{% endblock  %}
+
+{% block content %}
+
+<h1>Olá, {{user.first_name}}</h1>
+
+<div class="container mx-auto p-6">
+    <h1 class="text-3xl font-bold mb-6">Dashboard</h1>
+
+    <!-- OS abertas -->
+    <div class="mb-8">
+        <h2 class="text-xl font-semibold mb-4">OS abertas</h2>
+        <ul>
+            <!--{% for produto in produtos_mais_vendidos %}
+                <li>{{ produto.nome }} - (exemplo de quantidade ou popularidade)</li>
+            {% endfor %}-->
+        </ul>
+    </div>
+
+    <!-- Produtos mais vendidos -->
+    <div class="mb-8">
+        <h2 class="text-xl font-semibold mb-4">Produtos Mais Vendidos</h2>
+        <ul>
+            {% for produto in produtos_mais_vendidos %}
+                <li>{{ produto.nome }} - (exemplo de quantidade ou popularidade)</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- Produtos próximos da quantidade mínima -->
+<div class="mb-8">
+    <h2 class="text-xl font-semibold mb-4">Produtos Próximos da Quantidade Mínima</h2>
+    <ul>
+        {% if produtos_proximos_qtd_minima %}
+            {% for produto in produtos_proximos_qtd_minima %}
+                <li>{{ produto.nome }} - Estoque Atual: {{ produto.qtd_atual }}</li>
+            {% endfor %}
+        {% else %}
+            <li>Nenhum produto próximo do limite mínimo.</li>
+        {% endif %}
+    </ul>
+</div>
+
+<!-- Ordens de Serviço no mês -->
+<div>
+    <h2 class="text-xl font-semibold mb-4">Ordens de Serviço Realizadas no Mês</h2>
+    <p>Total: {{ ordens_mes|default:"Nenhuma ordem encontrada" }}</p>
+</div>
+
+{% endblock %}
