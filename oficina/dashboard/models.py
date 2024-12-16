@@ -1,3 +1,3 @@
 from django.db import models
 
-# Create your models here.
+# Geralmente vazio ou usado para armazenar configurações específicas.

@@ -30,6 +30,6 @@ urlpatterns = [
     path('ordem_servico/', include('ordem_servico.urls')),
     path('produtos/', include('produto.urls')),
     path('veiculos/', include('veiculo.urls')),
-    path("", TemplateView.as_view(template_name="dashboard.html"), name="home")
+    path('', include('dashboard.urls'))
 ]
 if settings.DEBUG: urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

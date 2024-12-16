@@ -1,52 +1,93 @@
 {% extends "base.html" %}
 
-{% block title %}Minha Aplicação{% endblock  %}
-
 {% block content %}
+<div class="container mx-auto mt-8">
+    <h1 class="text-3xl font-bold">Dashboard</h1>
 
-<h1>Olá, {{user.first_name}}</h1>
+    <div class="grid grid-cols-2 gap-4 mt-4">
+        <!-- Estoque total -->
+        <div class="bg-blue-500 text-white p-4 rounded">
+            <h2 class="text-xl font-semibold">Estoque Total</h2>
+            <p class="text-2xl">{{ estoque_total }}</p>
+        </div>
 
-<div class="container mx-auto p-6">
-    <h1 class="text-3xl font-bold mb-6">Dashboard</h1>
+        <!-- Receita estimada -->
+        <div class="bg-green-500 text-white p-4 rounded">
+            <h2 class="text-xl font-semibold">Receita Estimada</h2>
+            <p class="text-2xl">R$ {{ receita_estimada|floatformat:2 }}</p>
+        </div>
+    </div>
+
+    <!-- Produtos proximos da quantidade minima -->
+    <div class="bg-white shadow-md rounded p-4">
+        <h2 class="text-xl font-bold mb-4">Produtos próximos da quantidade mínima</h2>
+        <div class="grid grid-cols-1 gap-4">
+            {% for produto in produtos_proximos_minimo %}
+            <div class="flex items-center justify-between bg-gray-100 p-3 rounded shadow">
+                <div>
+                    <p class="font-bold text-gray-800">{{ produto.nome }}</p>
+                    <p class="text-sm text-gray-600">Quantidade Atual: {{ produto.qtd_atual }}</p>
+                    <p class="text-sm text-gray-600">Quantidade Mínima: {{ produto.qtd_minima }}</p>
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-gray-600">Não há produtos próximos da quantidade mínima.</p>
+            {% endfor %}
+        </div>
+    </div>
 
     <!-- OS abertas -->
-    <div class="mb-8">
-        <h2 class="text-xl font-semibold mb-4">OS abertas</h2>
-        <ul>
-            <!--{% for produto in produtos_mais_vendidos %}
-                <li>{{ produto.nome }} - (exemplo de quantidade ou popularidade)</li>
-            {% endfor %}-->
-        </ul>
+    <div class="bg-white shadow-md rounded p-4 mt-6">
+        <h2 class="text-xl font-bold mb-4">Ordens de Serviço Abertas</h2>
+        <div class="grid grid-cols-1 gap-4">
+            {% for ordem in ordens_abertas %}
+            <div class="flex items-center justify-between bg-gray-100 p-3 rounded shadow">
+                <div>
+                    <p class="font-bold text-gray-800">Cliente: {{ ordem.cliente_nome }} | Código da OS: {{ ordem.codigo }}</p>
+                    <p class="text-sm text-gray-600">Data de Início: {{ ordem.data_inicio }}</p>
+                    <p class="text-sm text-gray-600">Descrição: {{ ordem.descricao }}</p>
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-gray-600">Não há ordens de serviço abertas no momento.</p>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <!-- Gráfico de Barras -->
+    <div class="mt-8 bg-white p-6 rounded shadow">
+        <h2 class="text-xl font-bold">Ordens de Serviço Realizadas por Mês</h2>
+        
+
+        <canvas id="grafico-os" class="mt-4"></canvas>
     </div>
 
-    <!-- Produtos mais vendidos -->
-    <div class="mb-8">
-        <h2 class="text-xl font-semibold mb-4">Produtos Mais Vendidos</h2>
-        <ul>
-            {% for produto in produtos_mais_vendidos %}
-                <li>{{ produto.nome }} - (exemplo de quantidade ou popularidade)</li>
-            {% endfor %}
-        </ul>
-    </div>
+    <!-- Script para Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <!-- Produtos próximos da quantidade mínima -->
-<div class="mb-8">
-    <h2 class="text-xl font-semibold mb-4">Produtos Próximos da Quantidade Mínima</h2>
-    <ul>
-        {% if produtos_proximos_qtd_minima %}
-            {% for produto in produtos_proximos_qtd_minima %}
-                <li>{{ produto.nome }} - Estoque Atual: {{ produto.qtd_atual }}</li>
-            {% endfor %}
-        {% else %}
-            <li>Nenhum produto próximo do limite mínimo.</li>
-        {% endif %}
-    </ul>
+<script>
+    const ctx = document.getElementById('grafico-os').getContext('2d');
+    const graficoOS = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: {{ labels|safe }}, // Lista de meses
+            datasets: [{
+                label: 'OS Realizadas por Mês',
+                data: {{ data|safe }},  // Quantidades por mês
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+
 </div>
-
-<!-- Ordens de Serviço no mês -->
-<div>
-    <h2 class="text-xl font-semibold mb-4">Ordens de Serviço Realizadas no Mês</h2>
-    <p>Total: {{ ordens_mes|default:"Nenhuma ordem encontrada" }}</p>
-</div>
-
 {% endblock %}
