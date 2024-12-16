@@ -3,24 +3,10 @@
 {% block content %}
 <div class="container mx-auto mt-8">
     <h1 class="text-3xl font-bold">Dashboard</h1>
-
-    <div class="grid grid-cols-2 gap-4 mt-4">
-        <!-- Estoque total -->
-        <div class="bg-blue-500 text-white p-4 rounded">
-            <h2 class="text-xl font-semibold">Estoque Total</h2>
-            <p class="text-2xl">{{ estoque_total }}</p>
-        </div>
-
-        <!-- Receita estimada -->
-        <div class="bg-green-500 text-white p-4 rounded">
-            <h2 class="text-xl font-semibold">Receita Estimada</h2>
-            <p class="text-2xl">R$ {{ receita_estimada|floatformat:2 }}</p>
-        </div>
-    </div>
-
-    <!-- Produtos proximos da quantidade minima -->
-    <div class="bg-white shadow-md rounded p-4">
-        <h2 class="text-xl font-bold mb-4">Produtos próximos da quantidade mínima</h2>
+    
+    <!-- Produtos próximos da quantidade mínima -->
+    <div class="bg-white shadow-md rounded p-4 mt-6">
+        <h2 class="text-xl font-bold mb-4">Produtos Próximos da Quantidade Mínima</h2>
         <div class="grid grid-cols-1 gap-4">
             {% for produto in produtos_proximos_minimo %}
             <div class="flex items-center justify-between bg-gray-100 p-3 rounded shadow">
@@ -36,14 +22,14 @@
         </div>
     </div>
 
-    <!-- OS abertas -->
+    <!-- Ordens de Serviço abertas -->
     <div class="bg-white shadow-md rounded p-4 mt-6">
         <h2 class="text-xl font-bold mb-4">Ordens de Serviço Abertas</h2>
         <div class="grid grid-cols-1 gap-4">
             {% for ordem in ordens_abertas %}
             <div class="flex items-center justify-between bg-gray-100 p-3 rounded shadow">
                 <div>
-                    <p class="font-bold text-gray-800">Cliente: {{ ordem.cliente_nome }} | Código da OS: {{ ordem.codigo }}</p>
+                    <p class="font-bold text-gray-800">Cliente: {{ ordem.cliente_nome }}</p>
                     <p class="text-sm text-gray-600">Data de Início: {{ ordem.data_inicio }}</p>
                     <p class="text-sm text-gray-600">Descrição: {{ ordem.descricao }}</p>
                 </div>
@@ -53,41 +39,13 @@
             {% endfor %}
         </div>
     </div>
-    
-    <!-- Gráfico de Barras -->
+
+    <!-- Gráfico de OS finalizadas -->
     <div class="mt-8 bg-white p-6 rounded shadow">
-        <h2 class="text-xl font-bold">Ordens de Serviço Realizadas por Mês</h2>
-        
-
-        <canvas id="grafico-os" class="mt-4"></canvas>
+        <h2 class="text-xl font-bold">Ordens de Serviço Finalizadas por Mês</h2>
+        <div class="flex justify-center mt-6">
+            <img src="data:image/png;base64,{{ grafico }}" alt="Gráfico de OS Finalizadas" class="rounded shadow-lg">
+        </div>
     </div>
-
-    <!-- Script para Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<script>
-    const ctx = document.getElementById('grafico-os').getContext('2d');
-    const graficoOS = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: {{ labels|safe }}, // Lista de meses
-            datasets: [{
-                label: 'OS Realizadas por Mês',
-                data: {{ data|safe }},  // Quantidades por mês
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-</script>
-
 </div>
 {% endblock %}
