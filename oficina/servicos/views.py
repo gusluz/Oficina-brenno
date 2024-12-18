@@ -18,6 +18,7 @@ class ServicoCreateView(CreateView):
     form_class = ServicoForm
     template_name = 'servico_form.html'
     success_url = reverse_lazy('servico_list')
+    
 
 class ServicoUpdateView(UpdateView):
     model = Servico

@@ -9,5 +9,6 @@ class Servico(models.Model):
     descricao = models.TextField(blank=True)
     produtos_utilizados = models.ManyToManyField(Produto, verbose_name='Produtos Utilizados')
 
+    
     def __str__(self):
         return f'{self.cliente_nome} - {self.codigo}'

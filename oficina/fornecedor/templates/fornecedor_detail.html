@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block title %}{% endblock  %}
+
+{% block content %}
+
+<div class="w-full max-w-4xl bg-white rounded shadow-md p-6">
+    <h2 class="text-xl font-bold mb-6 text-center">Visualização de fornecedor</h2>
+
+    <!-- Detalhes do fornecedor -->
+    <div class="grid grid-cols-1 gap-6">
+        <!-- Nome -->
+        <div>
+            <label class="block font-bold text-gray-700">Nome:</label>
+            <p class="py-2 px-3 border rounded-lg shadow bg-gray-100">{{fornecedor.nome}}</p>
+        </div>
+
+        <!-- CPF -->
+        <div>
+            <label class="block font-bold text-gray-700">CPF/CNPJ:</label>
+            <p class="py-2 px-3 border rounded-lg shadow bg-gray-100">{{fornecedor.cpf_cnpj}}</p>
+        </div>
+
+        <!-- Telefone 1 -->
+        <div>
+            <label class="block font-bold text-gray-700">Telefone 1:</label>
+            <p class="py-2 px-3 border rounded-lg shadow bg-gray-100">{{fornecedor.telefone}}</p>
+        </div>
+
+        <!-- Telefone 2 -->
+        <div>
+            <label class="block font-bold text-gray-700">Telefone 2:</label>
+            <p class="py-2 px-3 border rounded-lg shadow bg-gray-100">{{fornecedor.telefone2}}</p>
+        </div>
+
+        <!-- Email -->
+        <div>
+            <label class="block font-bold text-gray-700">Email:</label>
+            <p class="py-2 px-3 border rounded-lg shadow bg-gray-100">{{fornecedor.email}}</p>
+        </div>
+
+        <!-- CEP -->
+        <div>
+            <label class="block font-bold text-gray-700">CEP:</label>
+            <p class="py-2 px-3 border rounded-lg shadow bg-gray-100">{{fornecedor.endereco_cep}}</p>
+        </div>
+
+        <!-- Endereço -->
+        <div>
+            <label class="block font-bold text-gray-700">Endereço:</label>
+            <p class="py-2 px-3 border rounded-lg shadow bg-gray-100">{{fornecedor.endereco_logradouro}}</p>
+        </div>
+
+        <!-- Bairro -->
+        <div>
+            <label class="block font-bold text-gray-700">Número:</label>
+            <p class="py-2 px-3 border rounded-lg shadow bg-gray-100">{{fornecedor.endereco_numero}}</p>
+        </div>
+
+        <!-- Número -->
+        <div>
+            <label class="block font-bold text-gray-700">Bairro:</label>
+            <p class="py-2 px-3 border rounded-lg shadow bg-gray-100">{{fornecedor.endereco_bairro}}</p>
+        </div>
+
+        <!-- Cidade -->
+        <div>
+            <label class="block font-bold text-gray-700">Cidade:</label>
+            <p class="py-2 px-3 border rounded-lg shadow bg-gray-100">{{fornecedor.endereco_cidade}}</p>
+        </div>
+
+        <!-- Estado -->
+        <div>
+            <label class="block font-bold text-gray-700">Estado:</label>
+            <p class="py-2 px-3 border rounded-lg shadow bg-gray-100">{{fornecedor.endereco_estado}}</p>
+        </div>
+
+        <!-- Complemento -->
+        <div>
+            <label class="block font-bold text-gray-700">Complemento:</label>
+            <p class="py-2 px-3 border rounded-lg shadow bg-gray-100">{{fornecedor.endereco_complemento}}</p>
+        </div>
+
+        <!-- Observações -->
+        <div>
+            <label class="block font-bold text-gray-700">Observações:</label>
+            <p class="py-2 px-3 border rounded-lg shadow bg-gray-100">{{fornecedor.observacao}}</p>
+        </div>
+
+        <!-- Complemento -->
+        <div>
+            <label class="block font-bold text-gray-700">Criado Em:</label>
+            <p class="py-2 px-3 border rounded-lg shadow bg-gray-100">{{fornecedor.criado_em}}</p>
+        </div>
+
+    </div>
+
+    <!-- Botão Voltar -->
+    <div class="mt-6 flex justify-end">
+        <a href="/fornecedor/" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Voltar</a>
+    </div>
+</div>
+
+{% endblock  %}

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Minha Aplicação{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+    {% block head %}{% endblock  %}
+</head>
+<body>
+{% if user.is_authenticated %}
+    <div id="app" class="flex">
+        <!-- Inclui a Sidebar -->
+        {% include 'sidebar.html' %}
+
+        <!-- Conteúdo Principal -->
+        <div :class="sidebarOpen ? 'ml-64' : 'ml-16'" class="flex-1 max-h-px w-screen bg-gray-100  transition-all duration-300">
+            {% block content %}
+            {% endblock %}
+
+{% else %}
+<p>Você não está logado, por favor faça Login</p>
+<a href="{% url 'login' %}">Login</a>
+    
+{% endif %}
+        </div>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                sidebarOpen: true
+            }
+        });
+    </script>
+</body>
+</html>
+

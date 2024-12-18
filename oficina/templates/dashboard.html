@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mx-auto mt-8">
+    <h1 class="text-3xl font-bold">Dashboard</h1>
+    
+    <!-- Produtos próximos da quantidade mínima -->
+    <div class="bg-white shadow-md rounded p-4 mt-6">
+        <h2 class="text-xl font-bold mb-4">Produtos Próximos da Quantidade Mínima</h2>
+        <div class="grid grid-cols-1 gap-4">
+            {% for produto in produtos_proximos_minimo %}
+            <div class="flex items-center justify-between bg-gray-100 p-3 rounded shadow">
+                <div>
+                    <p class="font-bold text-gray-800">{{ produto.nome }}</p>
+                    <p class="text-sm text-gray-600">Quantidade Atual: {{ produto.qtd_atual }}</p>
+                    <p class="text-sm text-gray-600">Quantidade Mínima: {{ produto.qtd_minima }}</p>
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-gray-600">Não há produtos próximos da quantidade mínima.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Ordens de Serviço abertas -->
+    <div class="bg-white shadow-md rounded p-4 mt-6">
+        <h2 class="text-xl font-bold mb-4">Ordens de Serviço Abertas</h2>
+        <div class="grid grid-cols-1 gap-4">
+            {% for ordem in ordens_abertas %}
+            <div class="flex items-center justify-between bg-gray-100 p-3 rounded shadow">
+                <div>
+                    <p class="font-bold text-gray-800">Cliente: {{ ordem.cliente_nome }}</p>
+                    <p class="text-sm text-gray-600">Data de Início: {{ ordem.data_inicio }}</p>
+                    <p class="text-sm text-gray-600">Descrição: {{ ordem.descricao }}</p>
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-gray-600">Não há ordens de serviço abertas no momento.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Gráfico de OS finalizadas -->
+    <div class="mt-8 bg-white p-6 rounded shadow">
+        <h2 class="text-xl font-bold">Ordens de Serviço Finalizadas por Mês</h2>
+        <div class="flex justify-center mt-6">
+            <img src="data:image/png;base64,{{ grafico }}" alt="Gráfico de OS Finalizadas" class="rounded shadow-lg">
+        </div>
+    </div>
+</div>
+{% endblock %}

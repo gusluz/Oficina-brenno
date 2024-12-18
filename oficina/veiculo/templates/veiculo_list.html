@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+    {% block title %}Minha Aplicação{% endblock %}
+
+{% block content %}
+
+<div class="w-full max-w-5xl bg-white rounded shadow-md p-6">
+    <h2 class="text-xl font-bold mb-6 text-center">Gerenciamento de Veículo</h2>
+
+    <!-- Botões de Ação -->
+    <div class="flex justify-between mb-6">
+        <button class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline flex items-center">
+            <a href="veiculos/novo/">
+            <i class="fas fa-plus mr-2"></i> Adicionar Veículo
+            </a>
+        </button>
+        <form method="GET" action="{% url 'veiculo_list' %}" class="w-full max-w-sm flex items-center">
+            <input
+                type="text"
+                name="search"
+                placeholder="Pesquisar Veiculo..."
+                class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring"
+                value="{{ request.GET.search|default:'' }}"
+            />
+            <button
+                type="submit"
+                class="ml-2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            >
+                <i class="fas fa-search"></i>
+            </button>
+        </form>
+    </div>
+
+    <!-- Tabela de Produtos -->
+    <div class="overflow-x-auto">
+        <table class="table-auto w-full text-left bg-gray-100 border rounded-lg">
+            <thead>
+                <tr class="bg-gray-200">
+                    <th class="px-4 py-2">Modelo</th>
+                    <th class="px-4 py-2">Marca</th>
+                    <th class="px-4 py-2">Cor</th>
+                    <th class="px-4 py-2">Ano</th>
+                    <th class="px-4 py-2">Placa</th>
+                    <th class="px-4 py-2">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for veiculo in veiculos %}
+                <tr class="border-t">
+                    <td class="px-4 py-2">{{veiculo.modelo}}</td>
+                    <td class="px-4 py-2">{{veiculo.marca}}</td>
+                    <td class="px-4 py-2">{{veiculo.cor}}</td>
+                    <td class="px-4 py-2">{{veiculo.ano}}</td>
+                    <td class="px-4 py-2">{{veiculo.placa}}</td>
+                    <td class=" px-4 py-2 text-center flex justify-center space-x-2">
+                        <!-- Botão de Alterar -->
+                        <a href="{% url 'veiculo_edit' pk=veiculo.pk %}" class="bg-yellow-500 hover:bg-yellow-600 text-white py-1 px-3 rounded-md">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <!-- Botão de Visualizar -->
+                        <a href="{% url 'veiculo_detail' pk=veiculo.pk %}" class="bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded-md">
+                            <i class="fas fa-eye"></i>
+                            </a>
+                        <!-- Botão de Excluir -->
+                        <a href="{% url 'veiculo_confirm_delete' pk=veiculo.pk %}" class="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded-md">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" class="text-center text-gray-500 py-4">Nenhuma ordem de serviço encontrada.</td>
+                </tr>
+                {% endfor %}
+                <!-- Outras linhas podem ser adicionadas -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

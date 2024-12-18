@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block title %}Minha Aplicação{% endblock  %}
+
+{% block content %}
+
+
+<div class="flex flex-col h-screen bg-gray-100 p-6">
+    <div class="max-w-5xl bg-white rounded shadow-md p-6">
+        <h2 class="text-xl font-bold mb-6 text-center">Editar Ordem de Serviço</h2>
+        <form method="POST" enctype="multipart/form-data" class="flex-grow flex flex-col space-y-4">
+            {% csrf_token %}
+            <div class="grid grid-cols-2 gap-4">
+                <!-- Nome do Cliente -->
+                <div class="flex items-center">
+                    <label for="cliente" class="w-1/3 font-bold text-gray-700">Cliente:</label>
+                    <select id="cliente" name="cliente_nome" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
+                        <option value="" disabled>Selecione um cliente</option>
+                        {% for cliente in clientes %}
+                            <option value="{{ cliente.id }}" {% if cliente.id == ordem_servico.cliente_nome.id %}selected{% endif %}>
+                                {{ cliente.nome }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <!-- Veículo -->
+                <div class="flex items-center">
+                    <label for="veiculo" class="w-1/3 font-bold text-gray-700">Veículo:</label>
+                    <select id="veiculo" name="veiculo" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
+                        <option value="" disabled>Selecione um veículo</option>
+                        {% for veiculo in veiculos %}
+                            <option value="{{ veiculo.id }}" {% if veiculo.id == object.veiculo.id %}selected{% endif %}>
+                                {{ veiculo.modelo }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Fotos Antes -->
+                <div>
+                    <label class="block font-bold text-gray-700">Foto Antes:</label>
+                    <input type="file" name="foto_inicio" accept="image/*" multiple class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
+                </div>
+
+                <!-- Data de Entrega -->
+                <div>
+                    <label for="data_entrega" class="block font-bold text-gray-700">Data de Entrega:</label>
+                    <input type="datetime-local" id="data_entrega" name="data_fim" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" value="{{ object.data_fim|date:'Y-m-d\TH:i' }}">
+                </div>
+
+                <!-- Fotos Depois -->
+                <div>
+                    <label class="block font-bold text-gray-700">Foto Depois:</label>
+                    <input type="file" name="foto_fim" accept="image/*" multiple class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
+                </div>
+
+                <!-- Código -->
+                <div>
+                    <label for="codigo" class="block font-bold text-gray-700">Código:</label>
+                    <input type="text" id="codigo" name="codigo" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" value="{{ object.codigo }}">
+                </div>
+
+                <!-- Produtos Utilizados -->
+                <div>
+                    <label for="produtos" class="block font-bold text-gray-700">Produtos:</label>
+                    <select id="produtos" name="produtos_utilizados" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" multiple>
+                        {% for produto in produtos %}
+                            <option value="{{ produto.id }}" {% if produto in object.produtos_utilizados.all %}selected{% endif %}>
+                                {{ produto.nome }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <!-- Valor da Mão de Obra -->
+                <div>
+                    <label for="valor_mao_obra" class="block font-bold text-gray-700">Valor Mão de Obra:</label>
+                    <input id="mao_obra" name="mao_obra" step="0.01" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" value="{{ object.mao_obra }}">
+                </div>
+
+                <!-- Descrição -->
+                <div>
+                    <label for="descricao" class="block font-bold text-gray-700">Descrição:</label>
+                    <textarea id="descricao" name="descricao" rows="3" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">{{ object.descricao }}</textarea>
+                </div>
+
+                <!-- Valor Total -->
+                <div>
+                    <label for="valor_total" class="block font-bold text-gray-700">Valor Total:</label>
+                    <input id="valor_total" name="valor_total" step="0.01" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" value="{{ object.valor_total }}">
+                </div>
+
+                <!-- Observações -->
+                <div>
+                    <label for="observacoes" class="block font-bold text-gray-700">Observações:</label>
+                    <textarea id="observacoes" name="observacao" rows="3" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">{{ object.observacao }}</textarea>
+                </div>
+
+                <!-- Status 
+                <div>
+                    <label for="status" class="block font-bold text-gray-700">Status:</label>
+                    <select id="status" name="status" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
+                        <option value="Pendente" {% if object.status == 'Pendente' %}selected{% endif %}>Pendente</option>
+                        <option value="Finalizada" {% if object.status == 'Finalizada' %}selected{% endif %}>Finalizada</option>
+                    </select>
+                </div>
+            </div>-->
+
+            <!-- Botões -->
+        <div class="mt-6 flex justify-between">
+            <a href="/ordem_servico/" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Cancelar</a>
+            <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Salvar</button>
+        </div>
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}

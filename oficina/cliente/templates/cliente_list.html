@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+    {% block title %}Minha Aplicação{% endblock %}
+
+{% block content %}
+
+<div class="w-full max-w-5xl bg-white rounded shadow-md p-6">
+    <h2 class="text-xl font-bold mb-6 text-center">Gerenciamento de Clientes</h2>
+
+    <!-- Botões de Ação -->
+    <div class="flex justify-between mb-6">
+        <button class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline flex items-center">
+            <a href="cliente/novo/">
+            <i class="fas fa-plus mr-2"></i> Adicionar Cliente
+            </a>
+        </button>
+
+        <form method="GET" action="{% url 'cliente_list' %}" class="w-full max-w-sm flex items-center">
+            <input
+                type="text"
+                name="search"
+                placeholder="Pesquisar Cliente..."
+                class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring"
+                value="{{ request.GET.search|default:'' }}"
+            />
+            <button
+                type="submit"
+                class="ml-2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            >
+                <i class="fas fa-search"></i>
+            </button>
+        </form>
+    </div>
+
+    <!-- Tabela de Cliente -->
+    <div class="overflow-x-auto shadow-md rounded-lg">
+        <table class="table-auto w-full text-left bg-gray-100 border rounded-lg">
+            <thead>
+                <tr class="bg-gray-200">
+                    <th class="px-4 py-2">Nome</th>
+                    <th class="px-4 py-2">CPF</th>
+                    <th class="px-4 py-2">Telefone</th>
+                    <th class="px-4 py-2">Criado Em</th>
+                    <th class="px-4 py-2">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for cliente in clientes %}
+                <tr class="border-t">
+                    <td class="px-4 py-2">{{cliente.nome}}</td>
+                    <td class="px-4 py-2">{{cliente.cpf_cnpj}}</td>
+                    <td class="px-4 py-2">{{cliente.telefone}}</td>
+                    <td class="px-4 py-2">{{cliente.criado_em}}</td>
+                    <td class=" px-4 py-2 text-center flex justify-center space-x-2">
+                        <!-- Botão de Alterar -->
+                        <a href="{% url 'cliente_edit' pk=cliente.pk %}" class="bg-yellow-500 hover:bg-yellow-600 text-white py-1 px-3 rounded-md">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <!-- Botão de Visualizar -->
+                        <a href="{% url 'cliente_detail' pk=cliente.pk %}" class="bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded-md">
+                        <i class="fas fa-eye"></i>
+                        </a>
+                        <!-- Botão de Excluir -->
+                        <a href="{% url 'cliente_confirm_delete' pk=cliente.pk %}" class="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded-md">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7" class="text-center text-gray-500 py-4">Nenhuma ordem de serviço encontrada.</td>
+                </tr>
+                {% endfor %}
+                <!-- Outras linhas podem ser adicionadas -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
+

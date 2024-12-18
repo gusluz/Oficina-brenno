@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}{% endblock  %}
+
+{% block content %}
+
+<div class="w-full max-w-4xl bg-white rounded shadow-md p-6">
+    <h2 class="text-xl font-bold mb-6 text-center">Visualizar Veículo</h2>
+
+    <!-- Detalhes do Veículo -->
+    <div class="grid grid-cols-1 gap-6">
+        <!-- Cliente -->
+        <div class="flex items-center">
+            <label class="w-1/3 font-bold text-gray-700">Cliente:</label>
+            <p class="w-full py-2 px-3 border rounded-lg shadow bg-gray-100">{{veiculo.cliente_nome}}</p>
+        </div>
+
+        <!-- Modelo -->
+        <div>
+            <label class="block font-bold text-gray-700">Modelo:</label>
+            <p class="py-2 px-3 border rounded-lg shadow bg-gray-100">{{veiculo.modelo}}</p>
+        </div>
+
+        <!-- Marca -->
+        <div>
+            <label class="block font-bold text-gray-700">Marca:</label>
+            <p class="py-2 px-3 border rounded-lg shadow bg-gray-100">{{veiculo.marca}}</p>
+        </div>
+
+        <!-- Cor -->
+        <div>
+            <label class="block font-bold text-gray-700">Cor:</label>
+            <p class="py-2 px-3 border rounded-lg shadow bg-gray-100">{{veiculo.cor}}</p>
+        </div>
+
+        <!-- Ano -->
+        <div>
+            <label class="block font-bold text-gray-700">Ano:</label>
+            <p class="py-2 px-3 border rounded-lg shadow bg-gray-100">{{veiculo.ano}}</p>
+        </div>
+
+        <!-- Placa -->
+        <div>
+            <label class="block font-bold text-gray-700">Placa:</label>
+            <p class="py-2 px-3 border rounded-lg shadow bg-gray-100">{{veiculo.placa}}</p>
+        </div>
+
+        <!-- Imagem do Veículo -->
+    <div>
+        <label class="font-bold">Imagem do Veículo</label>
+        {% if veiculo.foto_veiculo %}
+            <img src="{{ veiculo.foto_veiculo.url }}" alt="Imagem do Veículo" class="w-64 h-64 object-cover border rounded-lg shadow-md">
+        {% else %}
+            <p>Imagem não disponível</p>
+        {% endif %}
+    </div>
+    
+
+    <!-- Botão Voltar -->
+    <div class="mt-6 flex justify-end">
+        <a href="/veiculos" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+            Voltar
+        </a>
+    </div>
+</div>
+
+
+{% endblock  %}

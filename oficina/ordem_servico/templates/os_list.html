@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+    {% block title %}Minha Aplicação{% endblock %}
+
+{% block content %}
+
+<div class="w-full max-w-5xl bg-white rounded shadow-md p-6">
+    <h2 class="text-xl font-bold mb-6 text-center">Gerenciamento de Os</h2>
+
+    <!-- Botões de Ação -->
+    <div class="flex justify-between mb-6">
+        <button class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline flex items-center">
+            <a href="ordem_servico/novo/">
+            <i class="fas fa-plus mr-2"></i> Adicionar Ordem de Serviço
+            </a>
+        </button>
+
+        <form method="GET" action="{% url 'os_list' %}" class="w-full max-w-sm flex items-center">
+            <input 
+                type="text" 
+                name="search" 
+                placeholder="Pesquisar pelo nome do cliente..." 
+                class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" 
+                value="{{ request.GET.search|default:'' }}" 
+            />
+            <button 
+                type="submit" 
+                class="ml-2 bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                <i class="fas fa-search"></i>
+            </button>
+        </form>
+        
+    </div>
+
+    <!-- Tabela de Produtos -->
+    <div class="overflow-x-auto shadow-md rounded-lg">
+        <table class="table-auto w-full text-left bg-gray-100 border rounded-lg">
+            <thead>
+                <tr class="bg-gray-200">
+                    <th class="px-4 py-2">ID</th>
+                    <th class="px-4 py-2">Nome do Cliente</th>
+                    <th class="px-4 py-2">Data de Início</th>
+                    <th class="px-4 py-2">Data de Entrega</th>
+                    <th class="px-4 py-2">Código</th>
+                    <th class="px-4 py-2">Valor Total</th>
+                    <th class="px-4 py-2">Descrição</th>
+                    <th class="px-4 py-2">Observação</th>
+                    <th class="px-4 py-2">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for os in ordem_servico %}
+                <tr class="border-t">
+                    <td class="px-4 py-2">{{os.id}}</td>
+                    <td class="px-4 py-2">{{os.cliente_nome}}</td>
+                    <td class="px-4 py-2">{{os.data_inicio|date:"d/m/Y H:i"}}</td>
+                    <td class="px-4 py-2">{{os.data_fim|date:"d/m/Y H:i"}}</td>
+                    <td class="px-4 py-2">{{os.codigo}}</td>
+                    <td class="px-4 py-2">R$ {{ os.valor_total }}</td>
+                    <td class="px-4 py-2">{{os.descricao|default:"-"}}</td>
+                    <td class="px-4 py-2">{{os.observacao|default:"-"}}</td>
+                    <td class=" px-4 py-2 text-center flex justify-center space-x-2">
+                        <!-- Botão de Alterar -->
+                        <a href="{% url 'os_edit' pk=os.pk %}" class="bg-yellow-500 hover:bg-yellow-600 text-white py-1 px-3 rounded-md">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <!-- Botão de Visualizar -->
+                        <a href="{% url 'os_detail' pk=os.pk %}" class="bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded-md">
+                            <i class="fas fa-eye"></i>
+                            </a>
+                        <!-- Botão de Excluir -->
+                        <a href="{% url 'os_confirm_delete' pk=os.pk %}" class="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded-md">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="10" class="text-center text-gray-500 py-4">Nenhuma Ordem de Serviço encontrada.</td>
+                </tr>
+                {% endfor %}
+                <!-- Outras linhas podem ser adicionadas -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+{% endblock %}

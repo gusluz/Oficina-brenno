@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %} Excluir Cliente{% endblock  %}
+
+{% block content %}
+
+<div class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white w-full max-w-md rounded-lg shadow-lg p-6">
+        <h2 class="text-xl font-bold mb-4 text-center text-red-600">Confirmar Exclusão</h2>
+        <p class="text-gray-700 text-center mb-6">
+            Tem certeza de que deseja excluir este Cliente? Esta ação não pode ser desfeita.
+        </p>
+        <!-- Botões de Ação -->
+        <div class="flex justify-around">
+            <form method="POST" action="">
+                {% csrf_token %}
+                <button type="submit" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    Confirmar
+                </button>
+            </form>
+            <a href="/clientes/" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Cancelar</a>
+        </div>
+    </div>
+</div>
+
+{% endblock  %}
