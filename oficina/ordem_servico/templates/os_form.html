@@ -59,9 +59,11 @@
                 <!-- Produtos Utilizados -->
                 <div>
                     <label for="produtos" class="block font-bold text-gray-700">Produtos:</label>
-                    <select id="produtos" name="produtos_utilizados[]" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" multiple>
+                    <select id="produtos" name="produtos_utilizados" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" multiple>
                         {% for produto in produtos %}
-                            <option value="{{ produto.id }}">{{ produto.nome }}</option>
+                            <option value="{{ produto.id }}" {% if produto in object.produtos_utilizados.all %}selected{% endif %}>
+                                {{ produto.nome }}
+                            </option>
                         {% endfor %}
                     </select>
                 </div>
@@ -102,4 +104,23 @@
     </div>
 </div>
 </div>
+
+<script>
+    $(document).ready(function() {
+        $('#cliente').select2({
+            placeholder: "Selecione um cliente",
+            allowClear: true,  // Adiciona um botão "limpar"
+            width: '100%'      // Garante que o dropdown se ajuste ao contêiner
+        });
+    });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#veiculo').select2({
+                placeholder: "Selecione um veiculo",
+                allowClear: true,  // Adiciona um botão "limpar"
+                width: '100%'      // Garante que o dropdown se ajuste ao contêiner
+            });
+        });
+    </script>
 {% endblock %}
