@@ -6,7 +6,7 @@
 
 <div class="flex flex-col h-screen bg-gray-100 p-6">
     <div class="max-w-5xl bg-white rounded shadow-md p-6">
-        <h2 class="text-xl font-bold mb-6 text-center">Cadastrar Ordem de Serviço</h2>
+        <h2 class="text-xl font-bold mb-6 text-center">Editar Ordem de Serviço</h2>
         <form method="POST" enctype="multipart/form-data" class="flex-grow flex flex-col space-y-4">
             {% csrf_token %}
             <div class="grid grid-cols-2 gap-4">
@@ -15,9 +15,9 @@
                     <label for="cliente" class="w-1/3 font-bold text-gray-700">Cliente:</label>
                     <select id="cliente" name="cliente_nome"
                         class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
-                        <option value="" disabled selected>Selecione um cliente</option>
+                        <option value="" disabled>Selecione um cliente</option>
                         {% for cliente in clientes %}
-                        <option value="{{ cliente.id }}">{{ cliente.nome }}</option>
+                        <option value="{{ cliente.id }}" {% if cliente.id == ordem_servico.cliente_nome.id %}selected {% endif %}>{{ cliente.nome }}</option>
                         {% endfor %}
                     </select>
                     <button type="button"
@@ -30,9 +30,9 @@
                     <label for="veiculo" class="w-1/3 font-bold text-gray-700">Veículo:</label>
                     <select id="veiculo" name="veiculo"
                         class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
-                        <option value="" disabled selected>Selecione um veículo</option>
+                        <option value="" disabled>Selecione um veículo</option>
                         {% for veiculo in veiculos %}
-                        <option value="{{ veiculo.id }}">{{ veiculo.modelo }}</option>
+                        <option value="{{ veiculo.id }}" {% if veiculo.id in ordem_servico.veiculo.all %}selected {% endif %}>{{ veiculo.modelo }}</option>
                         {% endfor %}
                     </select>
                     <button type="button"
@@ -43,21 +43,30 @@
                 <!-- Fotos Antes -->
                 <div>
                     <label class="block font-bold text-gray-700">Foto Antes:</label>
+                    {% if ordem_servico.foto_inicio %}
+                    <img src="{{ ordem_servico.foto_inicio.url }}" alt="Foto Antes"
+                        class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
+                    {% endif %}
                     <input type="file" name="foto_inicio" accept="image/*" multiple
                         class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
                 </div>
                 <!-- Fotos Depois -->
                 <div>
                     <label class="block font-bold text-gray-700">Foto Depois:</label>
+                    {% if ordem_servico.foto_fim %}
+                    <img src="{{ ordem_servico.foto_fim.url }}" alt="Foto Depois"
+                        class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
+                    {% endif %}
                     <input type="file" name="foto_fim" accept="image/*" multiple
                         class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
                 </div>
                 <!-- Código -->
                 <div>
                     <label for="codigo" class="block font-bold text-gray-700">Código:</label>
-                    <input type="text" id="codigo" name="codigo"
+                    <input type="text" id="codigo" name="codigo" value="{{ ordem_servico.codigo }}"
                         class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
                 </div>
+
                 <!-- Produtos Utilizados -->
                 <div class="p-6 max-w-4xl mx-auto bg-white rounded shadow-md">
                     <h2 class="text-2xl font-bold mb-4">Seleção de produtos</h2>
@@ -77,9 +86,7 @@
                                 class="w-24 p-2 border border-gray-300 rounded focus:outline-none focus:ring"
                                 placeholder="Qtd" min="1">
                             <button type="button" id="adicionarProduto"
-                                class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
-                                Adicionar
-                            </button>
+                                class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Adicionar</button>
                         </div>
                     </div>
 
@@ -95,35 +102,46 @@
                                 </tr>
                             </thead>
                             <tbody id="listaProdutos" class="bg-white">
-                                <!-- Produtos serão adicionados aqui dinamicamente -->
+                                {% for item in ordem_servico.os_produtos.all %}
+                                <tr id="produto-{{ item.id }}" data-produto-id="{{ item.produto.id }}">
+                                    <td class="px-4 py-2 border">{{ item.produto.nome }}</td>
+                                    <td class="px-4 py-2 border text-center">{{ item.quantidade }}</td>
+                                    <td class="px-4 py-2 text-center border">
+                                        <button type="button" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 remover">Remover</button>
+                                        <input type="hidden" name="produto[]" value="{{ item.produto.id }}">
+                                        <input type="hidden" name="quantidade[]" value="{{ item.quantidade }}">
+                                    </td>
+                                </tr>
+                                {% endfor %}
                             </tbody>
                         </table>
                     </div>
                 </div>
 
+
                 <!-- Valor da Mão de Obra -->
                 <div>
                     <label for="mao_obra" class="block font-bold text-gray-700">Valor Mão de Obra:</label>
-                    <input id="mao_obra" name="mao_obra" step="0.01"
+                    <input id="mao_obra" name="mao_obra" step="0.01" value="{{ ordem_servico.mao_obra }}"
                         class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
                 </div>
                 <!-- Descrição -->
                 <div>
                     <label for="descricao" class="block font-bold text-gray-700">Descrição:</label>
                     <textarea id="descricao" name="descricao" rows="3"
-                        class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring"></textarea>
+                        class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">{{ ordem_servico.descricao }}</textarea>
                 </div>
                 <!-- Valor Total -->
                 <div>
                     <label for="valor_total" class="block font-bold text-gray-700">Valor Total:</label>
-                    <input id="valor_total" name="valor_total" step="0.01"
+                    <input id="valor_total" name="valor_total" step="0.01" value="{{ ordem_servico.valor_total }}"
                         class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
                 </div>
                 <!-- Observações -->
                 <div>
                     <label for="observacoes" class="block font-bold text-gray-700">Observações:</label>
                     <textarea id="observacoes" name="observacao" rows="3"
-                        class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring"></textarea>
+                        class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">{{ ordem_servico.observacao }}</textarea>
                 </div>
             </div>
             <!-- Botões -->
@@ -166,23 +184,41 @@
         // Função para criar a linha da tabela
         function criarLinhaTabela(produtoNome, quantidade, produtoId) {
             const tr = document.createElement('tr');
+            tr.setAttribute('data-produto-id', produtoId);
             tr.innerHTML = `
-            <td class="px-4 py-2 border">${produtoNome}</td>
-            <td class="px-4 py-2 border text-center">${quantidade}</td>
-            <td class="px-4 py-2 text-center border">
-                <button class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 remover">Remover</button>
-                <input type="hidden" name="produto[]" value="${produtoId}">
-                <input type="hidden" name="quantidade[]" value="${quantidade}">
-            </td>
-        `;
-
-            // Adicionar funcionalidade de remover
-            tr.querySelector('.remover').addEventListener('click', () => {
-                tr.remove();
-            });
+                <td class="px-4 py-2 border">${produtoNome}</td>
+                <td class="px-4 py-2 border text-center">${quantidade}</td>
+                <td class="px-4 py-2 text-center border">
+                    <button type="button" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 remover">Remover</button>
+                    <input type="hidden" name="produto[]" value="${produtoId}">
+                    <input type="hidden" name="quantidade[]" value="${quantidade}">
+                </td>
+            `;
 
             return tr;
         }
+
+        // Função para remover produto da interface e da lista
+        function removerProduto(produtoId) {
+            const linha = document.getElementById(`produto-${produtoId}`);
+            if (linha) {
+                linha.remove();
+            }
+
+            // Remova os inputs hidden correspondentes
+            const produtoInput = document.querySelector(`input[name="produto[]"][value="${produtoId}"]`);
+            const quantidadeInput = produtoInput.nextElementSibling; // O input de quantidade está logo após o de produto
+
+            if (produtoInput) produtoInput.remove();
+            if (quantidadeInput) quantidadeInput.remove();
+        }
+
+        listaProdutos.addEventListener('click', (event) => {
+            if (event.target.classList.contains('remover')) {
+                const produtoId = event.target.closest('tr').dataset.produtoId;
+                removerProduto(produtoId);
+            }
+        });
 
         adicionarProduto.addEventListener('click', () => {
             const produtoOption = produtoSelect.options[produtoSelect.selectedIndex];

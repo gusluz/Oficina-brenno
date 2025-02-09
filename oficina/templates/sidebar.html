@@ -1,78 +1,79 @@
-<div id="sidebarContainer" class="flex h-screen">
+<div id="app" class="flex h-screen">
     <!-- Sidebar -->
-    <div id="sidebar" class="bg-gray-800 text-white h-screen fixed top-0 left-0 transition-all duration-300 flex flex-col w-64">
-        <!-- Botão para abrir/fechar -->
-        <button id="sidebarToggle" class="p-4 focus:outline-none">
-            <i id="sidebarIcon" class="fas fa-times w-6 h-6"></i>
-        </button>
+    <div :class="sidebarOpen ? 'w-64' : 'w-16'" class="bg-gray-800 text-white h-screen fixed top-0 left-0 transition-all duration-300 flex flex-col">
 
+
+        <!-- Botão para abrir/fechar -->
+        <button @click="sidebarOpen = !sidebarOpen" class="p-4 focus:outline-none">
+            <i v-if="sidebarOpen" class="fas fa-times w-6 h-6"></i>
+            <i v-else class="fas fa-bars w-6 h-6"></i>
+        </button>
         <!-- Itens da Sidebar -->
         <div class="flex-1 mt-4">
             <ul>
                 <!-- Dashboard -->
                 <li class="flex items-center p-2 hover:bg-gray-700">
                     <a href="/">
-                        <i class="fas fa-home w-6 h-6"></i>
-                        <span class="ml-2">Dashboard</span>
+                    <i class="fas fa-home w-6 h-6"></i>
+                    <span :class="sidebarOpen ? 'inline' : 'hidden'" class="ml-2">Dashboard</span>
                     </a>
                 </li>
                 <!-- Ordens de Serviços -->
                 <li class="flex items-center p-2 hover:bg-gray-700">
                     <a href="/ordem_servico/">
-                        <i class="fas fa-cogs w-6 h-6"></i>
-                        <span class="ml-2">Ordens de Serviço</span>
+                    <i class="fas fa-cogs w-6 h-6"></i>
+                    <span :class="sidebarOpen ? 'inline' : 'hidden'" class="ml-2">Ordens de Serviço</span>
                     </a>
                 </li>
                 <!-- Produtos -->
                 <li class="flex items-center p-2 hover:bg-gray-700">
                     <a href="/produtos/">
-                        <i class="fas fa-box w-6 h-6"></i>
-                        <span class="ml-2">Produtos</span>
+                    <i class="fas fa-box w-6 h-6"></i>
+                    <span :class="sidebarOpen ? 'inline' : 'hidden'" class="ml-2">Produtos</span>
                     </a>
                 </li>
-                <!-- Veículo -->
+                <!-- Veículo (Moto) -->
                 <li class="flex items-center p-2 hover:bg-gray-700">
                     <a href="/veiculos/">
-                        <i class="fas fa-motorcycle w-6 h-6"></i>
-                        <span class="ml-2">Veículo</span>
+                    <i class="fas fa-motorcycle w-6 h-6"></i>
+                    <span :class="sidebarOpen ? 'inline' : 'hidden'" class="ml-2">Veículo</span>
                     </a>
                 </li>
                 <!-- Clientes -->
                 <li class="flex items-center p-2 hover:bg-gray-700">
                     <a href="/clientes/">
-                        <i class="fas fa-user w-6 h-6"></i>
-                        <span class="ml-2">Clientes</span>
+                    <i class="fas fa-user w-6 h-6"></i>
+                    <span :class="sidebarOpen ? 'inline' : 'hidden'" class="ml-2">Clientes</span>
                     </a>
                 </li>
                 <!-- Fornecedores -->
                 <li class="flex items-center p-2 hover:bg-gray-700">
                     <a href="/fornecedor/">
-                        <i class="fas fa-users w-6 h-6"></i>
-                        <span class="ml-2">Fornecedores</span>
+                    <i class="fas fa-users w-6 h-6"></i>
+                    <span :class="sidebarOpen ? 'inline' : 'hidden'" class="ml-2">Fornecedores</span>
                     </a>
                 </li>
                 <!-- Perfil -->
                 <li class="flex items-center p-2 hover:bg-gray-700">
                     <a href="/accounts/password_change/">
-                        <i class="fas fa-user-circle w-6 h-6"></i>
-                        <span class="ml-2">Perfil</span>
+                    <i class="fas fa-user-circle w-6 h-6"></i>
+                    <span :class="sidebarOpen ? 'inline' : 'hidden'" class="ml-2">Perfil</span>
                     </a>
                 </li>
                 <!-- Sair -->
                 <li class="flex items-center p-2 hover:bg-gray-700">
                     <a href="{% url 'logout' %}">
-                        <i class="fas fa-sign-out-alt w-6 h-6"></i>
-                        <span class="ml-2">Sair</span>
+                    <i class="fas fa-sign-out-alt w-6 h-6"></i>
+                    <span :class="sidebarOpen ? 'inline' : 'hidden'" class="ml-2">Sair</span>
                     </a>
                 </li>
                 <!-- Admin -->
                 <li class="flex items-center p-2 hover:bg-gray-700">
                     <a href="/admin">
-                        <i class="fas fa-search w-6 h-6"></i>
-                        <span class="ml-2">Admin</span>
+                    <i class="fas fa-search w-6 h-6"></i>
+                    <span :class="sidebarOpen ? 'inline' : 'hidden'" class="ml-2">Admin</span>
                     </a>
                 </li>
             </ul>
         </div>
     </div>
-</div>

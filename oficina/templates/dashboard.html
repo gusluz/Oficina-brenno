@@ -29,7 +29,7 @@
             {% for ordem in ordens_abertas %}
             <div class="flex items-center justify-between bg-gray-100 p-3 rounded shadow">
                 <div>
-                    <p class="font-bold text-gray-800">Cliente: {{ ordem.cliente_nome }} | Código da OS: {{ ordem.codigo }}</p>
+                    <p class="font-bold text-gray-800">Cliente: {{ ordem.cliente_nome }}</p>
                     <p class="text-sm text-gray-600">Data de Início: {{ ordem.data_inicio }}</p>
                     <p class="text-sm text-gray-600">Descrição: {{ ordem.descricao }}</p>
                 </div>
@@ -45,15 +45,6 @@
         <h2 class="text-xl font-bold">Ordens de Serviço Finalizadas por Mês</h2>
         <div class="flex justify-center mt-6">
             <img src="data:image/png;base64,{{ grafico }}" alt="Gráfico de OS Finalizadas" class="rounded shadow-lg">
-        </div>
-    </div>
-
-    <!-- Gráfico de barra: Produtos Mais Utilizados -->
-    <div class="container mx-auto mt-8">
-        <h1 class="text-3xl font-bold mb-4">Produtos Mais Utilizados</h1>
-        <div class="bg-white shadow-md rounded p-4">
-            <h2 class="text-xl font-semibold mb-4">Top 3 Produtos Utilizados em Ordens de Serviço</h2>
-            <img src="data:image/png;base64,{{ chart }}" alt="Gráfico de barra" class="w-full mx-auto">
         </div>
     </div>
 </div>

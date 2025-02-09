@@ -1,121 +1,88 @@
-{% extends "base.html" %}
-{% block title %}Adicionar Produto{% endblock %}
+{% extends 'base.html' %}
+
+{% block title %}
+  Minha Aplicação
+{% endblock %}
 
 {% block content %}
-<div class="w-full max-w-4xl bg-white rounded shadow-md p-6">
+  <div class="w-full max-w-4xl bg-white rounded shadow-md p-6">
     <h2 class="text-xl font-bold mb-6 text-center">Adicionar Produto</h2>
+    <!-- Formulário de Cadastro -->
     <form method="POST">
-        {% csrf_token %}
-        <div class="grid grid-cols-1 gap-6">
-
-            <!-- Fornecedor -->
-            <div>
-                <label for="fornecedor" class="block font-bold text-gray-700">Fornecedor:</label>
-                <select id="fornecedor" name="fornecedor" class="w-full py-2 px-3 border rounded-lg shadow">
-                    <option value="" disabled selected>Selecione um fornecedor</option>
-                    {% for fornecedor in fornecedores %}
-                        <option value="{{ fornecedor.id }}">{{ fornecedor.nome }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-
-            <!-- Código -->
-            <div>
-                <label for="codigo" class="block font-bold text-gray-700">Código:</label>
-                <input type="text" id="codigo" name="codigo" class="w-full py-2 px-3 border rounded-lg shadow">
-            </div>
-
-            <!-- Nome -->
-            <div>
-                <label for="nome" class="block font-bold text-gray-700">Nome:</label>
-                <input type="text" id="nome" name="nome" class="w-full py-2 px-3 border rounded-lg shadow">
-            </div>
-
-            <!-- Descrição -->
-            <div>
-                <label for="descricao" class="block font-bold text-gray-700">Descrição:</label>
-                <textarea id="descricao" name="descricao" rows="3" class="w-full py-2 px-3 border rounded-lg shadow"></textarea>
-            </div>
-
-            <!-- Valor -->
-            <div>
-                <label for="valor" class="block font-bold text-gray-700">Valor:</label>
-                <input type="number" id="valor" name="valor" step="0.01" class="w-full py-2 px-3 border rounded-lg shadow">
-            </div>
-
-            <!-- Outras Despesas -->
-            <div>
-                <label for="despesas" class="block font-bold text-gray-700">Outras Despesas:</label>
-                <input type="number" id="despesas" name="outras_despesas" step="0.01" class="w-full py-2 px-3 border rounded-lg shadow">
-            </div>
-
-            <!-- Custo Final -->
-            <div>
-                <label for="custo_final" class="block font-bold text-gray-700">Custo Final:</label>
-                <input type="number" id="custo_final" name="custo_final" class="w-full py-2 px-3 border rounded-lg shadow" readonly>
-            </div>
-
-            <!-- Lucro -->
-            <div>
-                <label for="lucro" class="block font-bold text-gray-700">Lucro:</label>
-                <input type="number" id="lucro" name="lucro" step="0.01" class="w-full py-2 px-3 border rounded-lg shadow">
-            </div>
-
-            <!-- Valor Venda -->
-            <div>
-                <label for="valor_venda" class="block font-bold text-gray-700">Valor Venda:</label>
-                <input type="number" id="valor_venda" name="valor_venda" class="w-full py-2 px-3 border rounded-lg shadow" readonly>
-            </div>
-
-            <!-- Quantidade Mínima -->
-            <div>
-                <label for="qtd_min" class="block font-bold text-gray-700">Qtd. Mínima:</label>
-                <input type="number" id="qtd_min" name="qtd_minima" class="w-full py-2 px-3 border rounded-lg shadow">
-            </div>
-
-            <!-- Quantidade Máxima -->
-            <div>
-                <label for="qtd_max" class="block font-bold text-gray-700">Qtd. Máxima:</label>
-                <input type="number" id="qtd_max" name="qtd_maxima" class="w-full py-2 px-3 border rounded-lg shadow">
-            </div>
-
-            <!-- Quantidade Atual -->
-            <div>
-                <label for="qtd_atual" class="block font-bold text-gray-700">Qtd. Atual:</label>
-                <input type="number" id="qtd_atual" name="qtd_atual" class="w-full py-2 px-3 border rounded-lg shadow">
-            </div>
+      {% csrf_token %}
+      <div class="grid grid-cols-1 gap-6">
+        <!-- Nome do Fornecedor -->
+        <div class="flex items-center">
+          <label for="fornecedor" class="w-1/3 font-bold text-gray-700">Fornecedor:</label>
+          <select id="fornecedor" name="fornecedor" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
+            <option value="" disabled selected>Selecione um fornecedor</option>
+            {% for fornecedor in fornecedores %}
+              <option value="{{ fornecedor.id }}">{{ fornecedor.nome }}</option>
+            {% endfor %}
+          </select>
+          <button type="button" class="ml-2 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"><i class="fas fa-plus"></i></button>
         </div>
-
-        <!-- Botões -->
-        <div class="mt-6 flex justify-between">
-            <a href="/produtos" class="bg-gray-500 text-white font-bold py-2 px-4 rounded">Cancelar</a>
-            <button type="submit" class="bg-blue-500 text-white font-bold py-2 px-4 rounded">Salvar</button>
+        <!-- Código -->
+        <div>
+          <label for="codigo" class="block font-bold text-gray-700">Código:</label>
+          <input type="text" id="codigo" name="codigo" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" />
         </div>
+        <!-- Nome -->
+        <div>
+          <label for="nome" class="block font-bold text-gray-700">Nome:</label>
+          <input type="text" id="nome" name="nome" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" />
+        </div>
+        <!-- Descrição -->
+        <div>
+          <label for="descricao" class="block font-bold text-gray-700">Descrição:</label>
+          <textarea id="descricao" name="descricao" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" rows="3"></textarea>
+        </div>
+        <!-- Valor -->
+        <div>
+          <label for="valor" class="block font-bold text-gray-700">Valor:</label>
+          <input type="number" step="0.01" id="valor" name="valor" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" />
+        </div>
+        <!-- Outras Despesas -->
+        <div>
+          <label for="despesas" class="block font-bold text-gray-700">Outras Despesas:</label>
+          <input type="number" step="0.01" id="despesas" name="outras_despesas" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" />
+        </div>
+        <!-- Custo Final -->
+        <div>
+          <label for="custo_final" class="block font-bold text-gray-700">Custo Final:</label>
+          <input type="number" step="0.01" id="custo_final" name="custo_final" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" />
+        </div>
+        <!-- Lucro -->
+        <div>
+          <label for="lucro" class="block font-bold text-gray-700">Lucro:</label>
+          <input type="number" step="0.01" id="lucro" name="lucro" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" />
+        </div>
+        <!-- Valor de Venda -->
+        <div>
+          <label for="venda" class="block font-bold text-gray-700">Valor Venda:</label>
+          <input type="number" step="0.01" id="venda" name="valor_venda" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" />
+        </div>
+        <!-- Quantidade Mínima -->
+        <div>
+          <label for="qtd_min" class="block font-bold text-gray-700">Qtd. Mínima:</label>
+          <input type="number" id="qtd_min" name="qtd_minima" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" />
+        </div>
+        <!-- Quantidade Máxima -->
+        <div>
+          <label for="qtd_max" class="block font-bold text-gray-700">Qtd. Máxima:</label>
+          <input type="number" id="qtd_max" name="qtd_maxima" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" />
+        </div>
+        <!-- Quantidade Atual -->
+        <div>
+          <label for="qtd_atual" class="block font-bold text-gray-700">Qtd. Atual:</label>
+          <input type="number" id="qtd_atual" name="qtd_atual" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" />
+        </div>
+      </div>
+      <!-- Botões -->
+      <div class="mt-6 flex justify-between">
+        <a href="/produtos" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Cancelar</a>
+        <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Salvar</button>
+      </div>
     </form>
-</div>
-
-<!-- JavaScript para cálculo automático -->
-<script>
-    const valor = document.getElementById('valor');
-    const despesas = document.getElementById('despesas');
-    const custoFinal = document.getElementById('custo_final');
-    const lucro = document.getElementById('lucro');
-    const valorVenda = document.getElementById('valor_venda');
-
-    function atualizarValores() {
-        const valorBase = parseFloat(valor.value) || 0;
-        const outrasDespesas = parseFloat(despesas.value) || 0;
-        const lucroValor = parseFloat(lucro.value) || 0;
-
-        const custo = valorBase + outrasDespesas;
-        custoFinal.value = custo.toFixed(2);
-
-        const venda = custo + lucroValor;
-        valorVenda.value = venda.toFixed(2);
-    }
-
-    valor.addEventListener('input', atualizarValores);
-    despesas.addEventListener('input', atualizarValores);
-    lucro.addEventListener('input', atualizarValores);
-</script>
+  </div>
 {% endblock %}
