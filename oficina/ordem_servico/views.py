@@ -24,8 +24,8 @@ class OSListView(ListView):
         queryset = super().get_queryset()
         search_query = self.request.GET.get("search", "")
         if search_query:
-            # Usando o campo cliente_nome diretamente
-            queryset = queryset.filter(cliente_nome__icontains=search_query)
+            # Usando o campo codigo da OS diretamente
+            queryset = queryset.filter(codigo__icontains=search_query)
         return queryset
 
 
