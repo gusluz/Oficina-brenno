@@ -52,23 +52,24 @@ def dashboard(request):
     image_base64_os = base64.b64encode(buffer_os.read()).decode('utf-8')
     buffer_os.close()
     
-    # Obtendo os 3 produtos mais utilizados
+    # Obtendo os 5 produtos mais utilizados
     produtos_mais_utilizados = (
         OSProduto.objects.values('produto__nome')
         .annotate(total_quantidade=Sum('quantidade'))
-        .order_by('-total_quantidade')[:3]
+        .order_by('-total_quantidade')[:5]
     )
     
     # Extraindo os nomes dos produtos e as quantidades
     nomes_produtos = [produto['produto__nome'] for produto in produtos_mais_utilizados]
     quantidades = [produto['total_quantidade'] for produto in produtos_mais_utilizados]
     
-    # Gerar o gráfico dos 3 produtos mais utilizados
+    # Gerar o gráfico dos 5 produtos mais utilizados
     plt.figure(figsize=(10, 5))
     plt.bar(nomes_produtos, quantidades, color=['blue', 'orange', 'green'])
-    plt.title("Top 3 Produtos Mais Utilizados")
+    plt.title("Top 5 Produtos Mais Utilizados")
     plt.xlabel("Produtos")
     plt.ylabel("Quantidade Utilizada")
+    plt.yticks(range(0, max(quantidades) + 1))
     plt.tight_layout()
     
     # Salvar o gráfico em memória

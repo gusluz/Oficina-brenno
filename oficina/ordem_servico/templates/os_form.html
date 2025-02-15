@@ -52,12 +52,6 @@
                     <input type="file" name="foto_fim" accept="image/*" multiple
                         class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
                 </div>
-                <!-- Código -->
-                <div>
-                    <label for="codigo" class="block font-bold text-gray-700">Código:</label>
-                    <input type="text" id="codigo" name="codigo"
-                        class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" required/>
-                </div>
                 <!-- Produtos Utilizados -->
                 <div class="p-6 max-w-4xl mx-auto bg-white rounded shadow-md">
                     <h2 class="text-2xl font-bold mb-4">Seleção de produtos</h2>
@@ -67,7 +61,7 @@
                         <label for="produto" class="block text-sm font-medium text-gray-700">Produtos:</label>
                         <div class="flex items-center space-x-2 mt-2">
                             <select id="produto" name="produto[]"
-                                class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" required/>
+                                class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
                                 <option value="" disabled selected>Selecione um produto</option>
                                 {% for produto in produtos %}
                                 <option value="{{ produto.id }}">{{ produto.nome }}</option>

@@ -40,14 +40,20 @@
                     class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
                 {% endif %}
             </div>
-            <!-- Código -->
+            <!-- Data inicio -->
             <div>
-                <label for="codigo" class="block font-bold text-gray-700">Código:</label>
+                <label for="data_inicio" class="block font-bold text-gray-700">Data do Inicio:</label>
                 <div class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring bg-gray-100">
-                    {{ ordem_servico.codigo }}
+                    {{ ordem_servico.data_inicio }}
                 </div>
             </div>
-
+            <!-- Data fim -->
+            <div>
+                <label for="data_fim" class="block font-bold text-gray-700">Data da Entrega:</label>
+                <div class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring bg-gray-100">
+                    {{ ordem_servico.data_fim }}
+                </div>
+            </div>
             <!-- Produtos Utilizados -->
             <div class="p-6 max-w-4xl mx-auto bg-white rounded shadow-md">
                 <h2 class="text-2xl font-bold mb-4">Produtos Utilizados</h2>
@@ -101,7 +107,10 @@
                     {{ ordem_servico.observacao }}
                 </div>
             </div>
-
+            <!-- Botão Voltar -->
+            <div class="mt-6 flex justify-end">
+                <a href="/ordem_servico" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Voltar</a>
+            </div>
         </div>
     </div>
 </div>

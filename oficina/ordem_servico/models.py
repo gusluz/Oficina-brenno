@@ -10,19 +10,17 @@ class OS(models.Model):
     data_inicio = models.DateTimeField(auto_now_add=True, null=False, blank=False, verbose_name="Data de inicio")
     data_fim = models.DateTimeField(null=True, blank=True, verbose_name="Data de entrega")
     foto_fim = models.ImageField(upload_to='images/', blank=True, null=True, verbose_name='Foto do veiculo depois da OS')
-    codigo = models.CharField(max_length=100, unique=True)
     mao_obra = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Valor da mão de obra')
     descricao = models.TextField(blank=True, verbose_name='Descrição')
     valor_total = models.DecimalField(max_digits=10, decimal_places=2)
     observacao = models.TextField('OBSERVAÇÕES', blank=True)
-    status = models.BooleanField(default=True, verbose_name='STATUS')
 
     class Meta:
         verbose_name = 'Ordem de Serviço'
         verbose_name_plural = 'Ordens de Serviço'
 
     def __str__(self):
-        return f'{self.cliente_nome} - {self.codigo}'
+        return f'{self.cliente_nome} - {self.id}'
 
 
 class OSProduto(models.Model):

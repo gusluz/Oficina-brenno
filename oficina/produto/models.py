@@ -5,7 +5,6 @@ from fornecedor.models import Fornecedor
 
 class Produto(models.Model):
     fornecedor = models.ForeignKey(Fornecedor, on_delete=models.CASCADE, verbose_name='Fornecedor')
-    codigo = models.CharField(max_length=100, unique=True)
     nome = models.CharField(max_length=255)
     descricao = models.TextField()
     valor = models.DecimalField(max_digits=10, decimal_places=2)
