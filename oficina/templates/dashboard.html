@@ -1,64 +1,75 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="container mx-auto mt-8">
-    <h1 class="text-3xl font-bold mb-4">Dashboard</h1>
-    <h1 class="text-3xl font-bold">Bem vindo {{user.first_name}}</h1>
-    
-    <div class="flex">
+<div class="container mx-auto px-4 py-8">
+    <!-- Cabeçalho -->
+    <div class="text-center mb-8">
+        <h1 class="text-4xl font-bold text-gray-800">Dashboard</h1>
+        <p class="text-lg text-gray-600 mt-2">Bem-vindo, {{ user.first_name }}!</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <!-- Coluna Esquerda: Gráficos -->
-        <div class="flex-1">
-            <!-- Gráfico de OS finalizadas -->
-            <div class="bg-white p-6 rounded shadow mb-6">
-                <h2 class="text-xl font-bold mb-4">Ordens de Serviço Finalizadas por Mês</h2>
+        <div class="lg:col-span-2">
+            <!-- Gráfico de OS Finalizadas -->
+            <div class="bg-white p-6 rounded-lg shadow-lg mb-6">
+                <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                    <i class="fas fa-chart-line text-blue-500 mr-2"></i>
+                    Ordens de Serviço Finalizadas por Mês
+                </h2>
                 <div class="flex justify-center">
-                    <img src="data:image/png;base64,{{ grafico_os }}" alt="Gráfico de OS Finalizadas" class="rounded shadow-lg">
+                    <img src="data:image/png;base64,{{ grafico_os }}" alt="Gráfico de OS Finalizadas" class="rounded-lg shadow-md">
                 </div>
             </div>
 
             <!-- Gráfico de Produtos Mais Utilizados -->
-            <div class="bg-white p-6 rounded shadow">
-                <h2 class="text-xl font-bold mb-4">Produtos Mais Utilizados</h2>
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                    <i class="fas fa-boxes text-green-500 mr-2"></i>
+                    Produtos Mais Utilizados
+                </h2>
                 <div class="flex justify-center">
-                    <img src="data:image/png;base64,{{ grafico_produtos }}" alt="Gráfico de Produtos Mais Utilizados" class="rounded shadow-lg">
+                    <img src="data:image/png;base64,{{ grafico_produtos }}" alt="Gráfico de Produtos Mais Utilizados" class="rounded-lg shadow-md">
                 </div>
             </div>
         </div>
 
         <!-- Coluna Direita: Listas -->
-        <div class="w-1/3 ml-6">
-            <!-- Produtos próximos da quantidade mínima -->
-            <div class="bg-white shadow-md rounded p-4 mb-6">
-                <h2 class="text-xl font-bold mb-4">Produtos Próximos da Quantidade Mínima</h2>
-                <div class="grid grid-cols-1 gap-4">
+        <div class="lg:col-span-1">
+            <!-- Produtos Próximos da Quantidade Mínima -->
+            <div class="bg-white p-6 rounded-lg shadow-lg mb-6">
+                <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                    <i class="fas fa-exclamation-triangle text-yellow-500 mr-2"></i>
+                    Produtos Próximos da Quantidade Mínima
+                </h2>
+                <div class="space-y-4">
                     {% for produto in produtos_proximos_minimo %}
-                        <div class="flex items-center justify-between bg-gray-100 p-3 rounded shadow">
-                            <div>
-                                <p class="font-bold text-gray-800">{{ produto.nome }}</p>
-                                <p class="text-sm text-gray-600">Quantidade Atual: {{ produto.qtd_atual }}</p>
-                                <p class="text-sm text-gray-600">Quantidade Mínima: {{ produto.qtd_minima }}</p>
-                            </div>
+                        <div class="bg-gray-50 p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                            <p class="font-bold text-gray-800">{{ produto.nome }}</p>
+                            <p class="text-sm text-gray-600">Quantidade Atual: {{ produto.qtd_atual }}</p>
+                            <p class="text-sm text-gray-600">Quantidade Mínima: {{ produto.qtd_minima }}</p>
                         </div>
                     {% empty %}
-                        <p class="text-gray-600">Não há produtos próximos da quantidade mínima.</p>
+                        <p class="text-gray-600 text-center">Não há produtos próximos da quantidade mínima.</p>
                     {% endfor %}
                 </div>
             </div>
 
-            <!-- Ordens de Serviço abertas -->
-            <div class="bg-white shadow-md rounded p-4">
-                <h2 class="text-xl font-bold mb-4">Ordens de Serviço Abertas</h2>
-                <div class="grid grid-cols-1 gap-4">
+            <!-- Ordens de Serviço Abertas -->
+            <div class="bg-white p-6 rounded-lg shadow-lg">
+                <h2 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                    <i class="fas fa-tools text-red-500 mr-2"></i>
+                    Ordens de Serviço Abertas
+                </h2>
+                <div class="space-y-4">
                     {% for ordem in ordens_abertas %}
-                        <div class="flex items-center justify-between bg-gray-100 p-3 rounded shadow">
-                            <div>
-                                <p class="font-bold text-gray-800">Cliente: {{ ordem.cliente_nome }}</p>
-                                <p class="text-sm text-gray-600">Data de Início: {{ ordem.data_inicio }}</p>
-                                <p class="text-sm text-gray-600">Descrição: {{ ordem.descricao }}</p>
-                            </div>
+                        <div class="bg-gray-50 p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                            <p class="font-bold text-gray-800">Cliente: {{ ordem.cliente_nome }}</p>
+                            <p class="text-sm text-gray-600">Data de Início: {{ ordem.data_inicio }}</p>
+                            <p class="text-sm text-gray-600">Descrição: {{ ordem.descricao }}</p>
                         </div>
                     {% empty %}
-                        <p class="text-gray-600">Não há ordens de serviço abertas no momento.</p>
+                        <p class="text-gray-600 text-center">Não há ordens de serviço abertas no momento.</p>
                     {% endfor %}
                 </div>
             </div>

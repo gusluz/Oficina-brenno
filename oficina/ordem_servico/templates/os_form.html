@@ -4,173 +4,196 @@
 
 {% block content %}
 
-<div class="flex flex-col h-screen bg-gray-100 p-6">
-    <div class="max-w-5xl bg-white rounded shadow-md p-6">
-        <h2 class="text-xl font-bold mb-6 text-center">Cadastrar Ordem de Serviço</h2>
-        <form method="POST" enctype="multipart/form-data" class="flex-grow flex flex-col space-y-4">
-            {% csrf_token %}
-            <div class="grid grid-cols-2 gap-4">
-                <!-- Nome do Cliente -->
-                <div class="flex items-center">
-                    <label for="cliente" class="w-1/3 font-bold text-gray-700">Cliente:</label>
-                    <select id="cliente" name="cliente_nome"
-                        class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" required/>
-                        <option value="" disabled selected>Selecione um cliente</option>
-                        {% for cliente in clientes %}
-                        <option value="{{ cliente.id }}">{{ cliente.nome }}</option>
+<div class="w-full max-w-4xl bg-white mx-auto rounded shadow-md p-6">
+    <h2 class="text-xl font-bold mb-6 text-center">Cadastrar Ordem de Serviço</h2>
+    <form method="POST" enctype="multipart/form-data" class="flex-grow flex flex-col space-y-4">
+        {% csrf_token %}
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Nome do Cliente -->
+            <div class="flex items-center">
+                <label for="cliente" class="w-1/3 font-bold text-gray-700">Cliente:</label>
+                <select id="cliente" name="cliente_nome"
+                    class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" required>
+                    <option value="" disabled selected>Selecione um cliente</option>
+                    {% for cliente in clientes %}
+                    <option value="{{ cliente.id }}">{{ cliente.nome }}</option>
+                    {% endfor %}
+                </select>
+                <button type="button"
+                    class="ml-2 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
+            <!-- Veículo -->
+            <div class="flex items-center">
+                <label for="veiculo" class="w-1/3 font-bold text-gray-700">Veículo:</label>
+                <select id="veiculo" name="veiculo"
+                    class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" required>
+                    <option value="" disabled selected>Selecione um veículo</option>
+                    {% for veiculo in veiculos %}
+                    <option value="{{ veiculo.id }}">{{ veiculo.modelo }}</option>
+                    {% endfor %}
+                </select>
+                <button type="button"
+                    class="ml-2 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
+            <!-- Fotos Antes -->
+            <div>
+                <label class="block font-bold text-gray-700">Foto Antes:</label>
+                <input type="file" name="foto_inicio" accept="image/*" multiple
+                    class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" onchange="previewImages(event, 'previewAntes')">
+                <div id="previewAntes" class="mt-2 flex space-x-2"></div>
+            </div>
+            <!-- Fotos Depois -->
+            <div>
+                <label class="block font-bold text-gray-700">Foto Depois:</label>
+                <input type="file" name="foto_fim" accept="image/*" multiple
+                    class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" onchange="previewImages(event, 'previewDepois')">
+                <div id="previewDepois" class="mt-2 flex space-x-2"></div>
+            </div>
+            <!-- Código -->
+            <div>
+                <label for="codigo" class="block font-bold text-gray-700">Código:</label>
+                <input type="text" id="codigo" name="codigo"
+                    class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" required>
+            </div>
+            <!-- Valor da Mão de Obra -->
+            <div>
+                <label for="mao_obra" class="block font-bold text-gray-700">Valor Mão de Obra:</label>
+                <input id="mao_obra" name="mao_obra" step="0.01"
+                    class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" required>
+            </div>
+            <!-- Descrição -->
+            <div>
+                <label for="descricao" class="block font-bold text-gray-700">Descrição:</label>
+                <textarea id="descricao" name="descricao" rows="3"
+                    class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" required></textarea>
+            </div>
+            <!-- Valor Total -->
+            <div>
+                <label for="valor_total" class="block font-bold text-gray-700">Valor Total:</label>
+                <input id="valor_total" name="valor_total" step="0.01"
+                    class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" required>
+            </div>
+            <!-- Observações -->
+            <div>
+                <label for="observacoes" class="block font-bold text-gray-700">Observações:</label>
+                <textarea id="observacoes" name="observacao" rows="3"
+                    class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring"></textarea>
+            </div>
+        </div>
+
+        <!-- Produtos Utilizados -->
+        <div class="mt-6 p-6 bg-white rounded shadow-md">
+            <h2 class="text-2xl font-bold mb-4">Seleção de produtos</h2>
+            <!-- Produtos e Quantidades -->
+            <div>
+                <label for="produto" class="block text-sm font-medium text-gray-700">Produtos:</label>
+                <div class="flex items-center space-x-2 mt-2">
+                    <select id="produto" name="produto[]"
+                        class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
+                        <option value="" disabled selected>Selecione um produto</option>
+                        {% for produto in produtos %}
+                        <option value="{{ produto.id }}">{{ produto.nome }}</option>
                         {% endfor %}
                     </select>
-                    <button type="button"
-                        class="ml-2 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                        <i class="fas fa-plus"></i>
+                    <input type="number" id="quantidade"
+                        class="w-24 p-2 border border-gray-300 rounded focus:outline-none focus:ring"
+                        placeholder="Qtd" min="1">
+                    <button type="button" id="adicionarProduto"
+                        class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
+                        Adicionar
                     </button>
-                </div>
-                <!-- Veículo -->
-                <div class="flex items-center">
-                    <label for="veiculo" class="w-1/3 font-bold text-gray-700">Veículo:</label>
-                    <select id="veiculo" name="veiculo"
-                        class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" required/>
-                        <option value="" disabled selected>Selecione um veículo</option>
-                        {% for veiculo in veiculos %}
-                        <option value="{{ veiculo.id }}">{{ veiculo.modelo }}</option>
-                        {% endfor %}
-                    </select>
-                    <button type="button"
-                        class="ml-2 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                        <i class="fas fa-plus"></i>
-                    </button>
-                </div>
-                <!-- Fotos Antes -->
-                <div>
-                    <label class="block font-bold text-gray-700">Foto Antes:</label>
-                    <input type="file" name="foto_inicio" accept="image/*" multiple
-                        class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
-                </div>
-                <!-- Fotos Depois -->
-                <div>
-                    <label class="block font-bold text-gray-700">Foto Depois:</label>
-                    <input type="file" name="foto_fim" accept="image/*" multiple
-                        class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
-                </div>
-                <!-- Produtos Utilizados -->
-                <div class="p-6 max-w-4xl mx-auto bg-white rounded shadow-md">
-                    <h2 class="text-2xl font-bold mb-4">Seleção de produtos</h2>
-
-                    <!-- Produtos e Quantidades -->
-                    <div>
-                        <label for="produto" class="block text-sm font-medium text-gray-700">Produtos:</label>
-                        <div class="flex items-center space-x-2 mt-2">
-                            <select id="produto" name="produto[]"
-                                class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
-                                <option value="" disabled selected>Selecione um produto</option>
-                                {% for produto in produtos %}
-                                <option value="{{ produto.id }}">{{ produto.nome }}</option>
-                                {% endfor %}
-                            </select>
-                            <input type="number" id="quantidade"
-                                class="w-24 p-2 border border-gray-300 rounded focus:outline-none focus:ring"
-                                placeholder="Qtd" min="1">
-                            <button type="button" id="adicionarProduto"
-                                class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">
-                                Adicionar
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Tabela de Produtos Selecionados -->
-                    <div class="mt-4">
-                        <h3 class="text-lg font-bold mb-2">Produtos Selecionados</h3>
-                        <table class="w-full table-auto border border-gray-300">
-                            <thead class="bg-gray-100">
-                                <tr>
-                                    <th class="px-4 py-2 text-left border">Produto</th>
-                                    <th class="px-4 py-2 text-left border">Quantidade</th>
-                                    <th class="px-4 py-2 text-center border">Ações</th>
-                                </tr>
-                            </thead>
-                            <tbody id="listaProdutos" class="bg-white">
-                                <!-- Produtos serão adicionados aqui dinamicamente -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- Valor da Mão de Obra -->
-                <div>
-                    <label for="mao_obra" class="block font-bold text-gray-700">Valor Mão de Obra:</label>
-                    <input id="mao_obra" name="mao_obra" step="0.01"
-                        class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" required/>
-                </div>
-                <!-- Descrição -->
-                <div>
-                    <label for="descricao" class="block font-bold text-gray-700">Descrição:</label>
-                    <textarea id="descricao" name="descricao" rows="3"
-                        class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" required/></textarea>
-                </div>
-                <!-- Valor Total -->
-                <div>
-                    <label for="valor_total" class="block font-bold text-gray-700">Valor Total:</label>
-                    <input id="valor_total" name="valor_total" step="0.01"
-                        class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" required/>
-                </div>
-                <!-- Observações -->
-                <div>
-                    <label for="observacoes" class="block font-bold text-gray-700">Observações:</label>
-                    <textarea id="observacoes" name="observacao" rows="3"
-                        class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring"></textarea>
                 </div>
             </div>
-            <!-- Botões -->
-      <div class="mt-6 flex justify-end">
-        <!-- Botão Salvar -->
-      <button id="btnSalvar" type="submit" class="bg-blue-500 text-white font-bold py-2 px-4 rounded">Salvar</button>
-      </div>
-        </form>
+            <!-- Tabela de Produtos Selecionados -->
+            <div class="mt-4">
+                <h3 class="text-lg font-bold mb-2">Produtos Selecionados</h3>
+                <table class="w-full table-auto border border-gray-300">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="px-4 py-2 text-left border">Produto</th>
+                            <th class="px-4 py-2 text-left border">Quantidade</th>
+                            <th class="px-4 py-2 text-center border">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listaProdutos" class="bg-white">
+                        <!-- Produtos serão adicionados aqui dinamicamente -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Botões -->
+        <div class="mt-6 flex justify-end space-x-2">
+            <a href="/ordem_servico/" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Cancelar</a>
+            <button id="btnSalvar" type="submit" class="bg-blue-500 text-white font-bold py-2 px-4 rounded">Salvar</button>
+        </div>
     </div>
+    </form>
 </div>
 
+<script>
+    // Função para pré-visualizar imagens
+    function previewImages(event, previewId) {
+        const preview = document.getElementById(previewId);
+        preview.innerHTML = '';
+        const files = event.target.files;
 
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.className = 'w-32 h-128 object-cover rounded';
+                preview.appendChild(img);
+            };
+
+            reader.readAsDataURL(file);
+        }
+    }
+</script>
+
+<!-- Scripts para Select2 e funcionalidades -->
 <script>
     $(document).ready(function () {
         $('#cliente').select2({
             placeholder: "Selecione um cliente",
-            allowClear: true,  // Adiciona um botão "limpar"
-            width: '100%'      // Garante que o dropdown se ajuste ao contêiner
+            allowClear: true,
+            width: '100%'
         });
-    });
-</script>
-<script>
-    $(document).ready(function () {
+
         $('#veiculo').select2({
             placeholder: "Selecione um veiculo",
-            allowClear: true,  // Adiciona um botão "limpar"
-            width: '100%'      // Garante que o dropdown se ajuste ao contêiner
+            allowClear: true,
+            width: '100%'
         });
     });
 </script>
-<!-- Script para funcionalidade -->
+
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const listaProdutos = document.getElementById('listaProdutos');
         const adicionarProduto = document.getElementById('adicionarProduto');
         const produtoSelect = document.getElementById('produto');
         const quantidadeInput = document.getElementById('quantidade');
-        const form = document.querySelector('form');
 
-        // Função para criar a linha da tabela
         function criarLinhaTabela(produtoNome, quantidade, produtoId) {
             const tr = document.createElement('tr');
             tr.innerHTML = `
-            <td class="px-4 py-2 border">${produtoNome}</td>
-            <td class="px-4 py-2 border text-center">${quantidade}</td>
-            <td class="px-4 py-2 text-center border">
-                <button class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 remover">Remover</button>
-                <input type="hidden" name="produto[]" value="${produtoId}">
-                <input type="hidden" name="quantidade[]" value="${quantidade}">
-            </td>
-        `;
+                <td class="px-4 py-2 border">${produtoNome}</td>
+                <td class="px-4 py-2 border text-center">${quantidade}</td>
+                <td class="px-4 py-2 text-center border">
+                    <button class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 remover">Remover</button>
+                    <input type="hidden" name="produto[]" value="${produtoId}">
+                    <input type="hidden" name="quantidade[]" value="${quantidade}">
+                </td>
+            `;
 
-            // Adicionar funcionalidade de remover
             tr.querySelector('.remover').addEventListener('click', () => {
                 tr.remove();
             });
@@ -192,12 +215,10 @@
             const novaLinha = criarLinhaTabela(produtoNome, quantidade, produtoId);
             listaProdutos.appendChild(novaLinha);
 
-            // Limpar campos após adicionar
             produtoSelect.value = '';
             quantidadeInput.value = '';
         });
     });
-
 </script>
 
 <script>
@@ -206,7 +227,7 @@
         const btnSalvar = document.getElementById("btnSalvar");
 
         btnSalvar.addEventListener("click", (e) => {
-            e.preventDefault(); // Impede o envio imediato do formulário
+            e.preventDefault();
 
             let isValid = true;
             const inputs = form.querySelectorAll("input[required], select[required], textarea[required]");
@@ -215,10 +236,7 @@
                 const parentDiv = input.closest("div");
 
                 if (!input.value.trim()) {
-                    // Adiciona borda vermelha ao campo vazio
                     input.classList.add("border-red-500");
-
-                    // Remove mensagens duplicadas
                     let error = parentDiv.querySelector(".text-red-500");
                     if (!error) {
                         error = document.createElement("p");
@@ -226,10 +244,8 @@
                         error.textContent = "Este campo é obrigatório.";
                         parentDiv.appendChild(error);
                     }
-
                     isValid = false;
                 } else {
-                    // Remove aviso se o campo for preenchido
                     input.classList.remove("border-red-500");
                     const error = parentDiv.querySelector(".text-red-500");
                     if (error) {
@@ -238,11 +254,11 @@
                 }
             });
 
-            // Somente submete o formulário se tudo estiver preenchido
             if (isValid) {
                 form.submit();
             }
         });
     });
 </script>
+
 {% endblock %}

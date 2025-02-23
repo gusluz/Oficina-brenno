@@ -36,49 +36,96 @@
         </div>
     </div>
     {% else %}
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bem-vindo ao Nosso Site</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-</head>
-<body class="bg-gray-100">
-    <div class="min-h-screen flex flex-col justify-center items-center">
-        <!-- Cabeçalho -->
-        <header class="text-center mb-12">
-            <h1 class="text-4xl font-bold text-gray-800">Bem-vindo ao Ciclo Motos</h1>
-            <p class="text-gray-600 mt-4">Sua plataforma de gerenciamento de oficina favorita</p>
-            <nav>
-                <ul class="justify-center text-gray-800">
-                    <li><a href="{% url 'login' %}" class="hover:text-blue-500">LOGIN</a></li>
-                    <li><a href="{% url 'register' %}" class="hover:text-blue-500">CADASTRO</a></li>
-                </ul>
-            </nav>
-        </header>
-        <!-- Conteúdo Principal -->
-        <main class="w-full max-w-4xl p-6 bg-white rounded-lg shadow-lg">
-            <img src="\media\images\moto.jpg"  class="w-full h-full object-cover rounded-lg mb-6"/>
-            <h2 class="text-2xl font-bold text-gray-800 mb-4">Nossos Serviços</h2>
-            <p class="text-gray-600 mb-6">Confira nossas ferramentas e serviços para sua oficina.</p>
-        </main>
-        <!-- Testemunhos -->
-        <section class="w-full max-w-4xl mt-12 p-6 bg-gray-800 text-white rounded-lg shadow-lg">
-            <h2 class="text-2xl font-bold mb-4">Depoimentos de Clientes</h2>
-            <div class="mb-6">
-                <p class="mb-2">"Melhor plataforma para oficina de motos que já utilizei! Atendimento excelente e de alta qualidade." - João Silva</p>
-                <p class="mb-2">"Minha experiência com a Ciclo Motos foi fantástica. Recomendo a todos!" - Maria Oliveira</p>
+    <!DOCTYPE html>
+    <html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Ciclo Motos - Oficina Especializada</title>
+        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <style>
+            .hero {
+                background-image: url('/media/images/moto.jpg'); /* Imagem de fundo */
+                background-size: cover;
+                background-position: center;
+            }
+            .btn-primary {
+                background-color: #4F46E5; /* Roxo mais escuro */
+                transition: background-color 0.3s ease;
+            }
+            .btn-primary:hover {
+                background-color: #4338CA; /* Roxo mais escuro no hover */
+            }
+            .btn-secondary {
+                background-color: #10B981; /* Verde */
+                transition: background-color 0.3s ease;
+            }
+            .btn-secondary:hover {
+                background-color: #059669; /* Verde mais escuro no hover */
+            }
+        </style>
+    </head>
+    <body class="bg-gray-100">
+        <!-- Seção Hero -->
+        <div class="hero min-h-screen flex flex-col justify-center items-center text-center text-white">
+            <div class="bg-black bg-opacity-50 p-8 rounded-lg">
+                <h1 class="text-5xl font-bold mb-4">Ciclo Motos</h1>
+                <p class="text-xl mb-8">Sua oficina especializada em manutenção de motos. Qualidade e confiança em cada serviço.</p>
+                <div class="space-x-4">
+                    <a href="{% url 'login' %}" class="btn-primary py-3 px-6 rounded-lg text-white font-bold">LOGIN</a>
+                    <a href="{% url 'register' %}" class="btn-secondary py-3 px-6 rounded-lg text-white font-bold">CADASTRO</a>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Seção Serviços -->
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center mb-8">Nossos Serviços</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-gray-100 p-6 rounded-lg shadow-lg text-center">
+                        <i class="fas fa-tools text-4xl text-blue-500 mb-4"></i>
+                        <h3 class="text-xl font-bold mb-2">Manutenção Preventiva</h3>
+                        <p class="text-gray-600">Garanta o bom funcionamento da sua moto com nossos serviços de manutenção preventiva.</p>
+                    </div>
+                    <div class="bg-gray-100 p-6 rounded-lg shadow-lg text-center">
+                        <i class="fas fa-wrench text-4xl text-green-500 mb-4"></i>
+                        <h3 class="text-xl font-bold mb-2">Reparos Especializados</h3>
+                        <p class="text-gray-600">Reparos de alta qualidade para deixar sua moto como nova.</p>
+                    </div>
+                    <div class="bg-gray-100 p-6 rounded-lg shadow-lg text-center">
+                        <i class="fas fa-cogs text-4xl text-yellow-500 mb-4"></i>
+                        <h3 class="text-xl font-bold mb-2">Personalização</h3>
+                        <p class="text-gray-600">Personalize sua moto com nossos serviços exclusivos.</p>
+                    </div>
+                </div>
             </div>
         </section>
+    
+        <!-- Seção Depoimentos -->
+        <section class="py-16 bg-gray-800 text-white">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center mb-8">Depoimentos de Clientes</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-gray-700 p-6 rounded-lg shadow-lg">
+                        <p class="mb-4">"Melhor oficina que já levei minha moto! Atendimento excelente e serviços de alta qualidade."</p>
+                        <p class="font-bold">João Silva</p>
+                    </div>
+                    <div class="bg-gray-700 p-6 rounded-lg shadow-lg">
+                        <p class="mb-4">"Minha experiência com a Ciclo Motos foi incrível. Recomendo a todos os amantes de motos!"</p>
+                        <p class="font-bold">Maria Oliveira</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    
         <!-- Rodapé -->
-        <footer class="w-full text-center mt-12">
-            <p class="text-gray-600">&copy; 2025 Ciclo Motos. Todos os direitos reservados.</p>
+        <footer class="py-8 bg-gray-900 text-white text-center">
+            <p>&copy; 2025 Ciclo Motos. Todos os direitos reservados.</p>
         </footer>
-    </div>
-</body>
-</html>
+    </body>
+    </html>
 
     {% endif %}
 

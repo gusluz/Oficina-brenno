@@ -4,7 +4,7 @@
 
 {% block content %}
 
-<div class="flex flex-col h-screen bg-gray-100 p-6">
+<div class="w-full max-w-4xl bg-white mx-auto rounded shadow-md p-6">
     <div class="max-w-5xl bg-white rounded shadow-md p-6">
         <h2 class="text-xl font-bold mb-6 text-center">Editar Ordem de Serviço</h2>
         <form method="POST" enctype="multipart/form-data" class="flex-grow flex flex-col space-y-4">
@@ -139,7 +139,8 @@
                 </div>
             </div>
             <!-- Botões -->
-            <div class="mt-6 flex justify-end">
+            <div class="mt-6 flex justify-end space-x-2">
+                <a href="/ordem_servico/" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Cancelar</a>
                 <button type="submit"
                     class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Salvar</button>
             </div>
