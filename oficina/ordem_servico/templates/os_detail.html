@@ -54,67 +54,67 @@
                     {{ ordem_servico.data_fim }}
                 </div>
             </div>
-            <!-- Produtos Utilizados -->
-            <div class="p-6 max-w-4xl mx-auto bg-white rounded shadow-md">
-                <h2 class="text-2xl font-bold mb-4">Produtos Utilizados</h2>
+        </div>
 
-                <!-- Tabela de Produtos Selecionados -->
-                <div class="mt-4">
-                    <table class="w-full table-auto border border-gray-300">
-                        <thead class="bg-gray-100">
-                            <tr>
-                                <th class="px-4 py-2 text-left border">Produto</th>
-                                <th class="px-4 py-2 text-left border">Quantidade</th>
-                                <th class="px-4 py-2 text-left border">Valor Unitário</th>
-                                <th class="px-4 py-2 text-left border">Valor Total</th>
-                            </tr>
-                        </thead>
-                        <tbody id="listaProdutos" class="bg-white">
-                            {% for item in os_produtos %}
-                            <tr>
-                                <td class="px-4 py-2 border">{{ item.produto.nome }}</td>
-                                <td class="px-4 py-2 border text-center">{{ item.quantidade }}</td>
-                                <td class="px-4 py-2 border text-center">{{ item.produto.valor_venda }}</td>
-                                <td class="px-4 py-2 border text-center">{{ item.valor_total }}</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
+        <!-- Produtos Utilizados -->
+        <div class="mt-6 p-6 bg-white rounded shadow-md">
+            <h2 class="text-2xl font-bold mb-4">Produtos Utilizados</h2>
+            <!-- Tabela de Produtos Selecionados -->
+            <div class="mt-4">
+                <table class="w-full table-auto border border-gray-300">
+                    <thead class="bg-gray-100">
+                        <tr>
+                            <th class="px-4 py-2 text-left border">Produto</th>
+                            <th class="px-4 py-2 text-left border">Quantidade</th>
+                            <th class="px-4 py-2 text-left border">Valor Unitário</th>
+                            <th class="px-4 py-2 text-left border">Valor Total</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listaProdutos" class="bg-white">
+                        {% for item in os_produtos %}
+                        <tr>
+                            <td class="px-4 py-2 border">{{ item.produto.nome }}</td>
+                            <td class="px-4 py-2 border text-center">{{ item.quantidade }}</td>
+                            <td class="px-4 py-2 border text-center">{{ item.produto.valor_venda }}</td>
+                            <td class="px-4 py-2 border text-center">{{ item.valor_total }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
             </div>
+        </div>
 
-            <!-- Valor da Mão de Obra -->
-            <div>
-                <label for="mao_obra" class="block font-bold text-gray-700">Valor Mão de Obra:</label>
-                <div class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring bg-gray-100">
-                    {{ ordem_servico.mao_obra }}
-                </div>
+        <!-- Valor da Mão de Obra -->
+        <div class="mt-6">
+            <label for="mao_obra" class="block font-bold text-gray-700">Valor Mão de Obra:</label>
+            <div class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring bg-gray-100">
+                {{ ordem_servico.mao_obra }}
             </div>
-            <!-- Descrição -->
-            <div>
-                <label for="descricao" class="block font-bold text-gray-700">Descrição:</label>
-                <div class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring bg-gray-100">
-                    {{ ordem_servico.descricao }}
-                </div>
+        </div>
+        <!-- Descrição -->
+        <div>
+            <label for="descricao" class="block font-bold text-gray-700">Descrição:</label>
+            <div class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring bg-gray-100">
+                {{ ordem_servico.descricao }}
             </div>
-            <!-- Valor Total -->
-            <div>
-                <label for="valor_total" class="block font-bold text-gray-700">Valor Total:</label>
-                <div class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring bg-gray-100">
-                    {{ ordem_servico.valor_total }}
-                </div>
+        </div>
+        <!-- Valor Total -->
+        <div>
+            <label for="valor_total" class="block font-bold text-gray-700">Valor Total:</label>
+            <div class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring bg-gray-100">
+                {{ ordem_servico.valor_total }}
             </div>
-            <!-- Observações -->
-            <div>
-                <label for="observacoes" class="block font-bold text-gray-700">Observações:</label>
-                <div class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring bg-gray-100">
-                    {{ ordem_servico.observacao }}
-                </div>
+        </div>
+        <!-- Observações -->
+        <div>
+            <label for="observacoes" class="block font-bold text-gray-700">Observações:</label>
+            <div class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring bg-gray-100">
+                {{ ordem_servico.observacao }}
             </div>
-            <!-- Botão Voltar -->
-            <div class="mt-6 flex justify-end">
-                <a href="/ordem_servico" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Voltar</a>
-            </div>
+        </div>
+        <!-- Botão Voltar -->
+        <div class="mt-6 flex justify-end">
+            <a href="/ordem_servico" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Voltar</a>
         </div>
     </div>
 </div>

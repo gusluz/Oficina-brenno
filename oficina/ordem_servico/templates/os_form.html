@@ -53,41 +53,11 @@
                     class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" onchange="previewImages(event, 'previewDepois')">
                 <div id="previewDepois" class="mt-2 flex space-x-2"></div>
             </div>
-            <!-- Código -->
-            <div>
-                <label for="codigo" class="block font-bold text-gray-700">Código:</label>
-                <input type="text" id="codigo" name="codigo"
-                    class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" required>
-            </div>
-            <!-- Valor da Mão de Obra -->
-            <div>
-                <label for="mao_obra" class="block font-bold text-gray-700">Valor Mão de Obra:</label>
-                <input id="mao_obra" name="mao_obra" step="0.01"
-                    class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" required>
-            </div>
-            <!-- Descrição -->
-            <div>
-                <label for="descricao" class="block font-bold text-gray-700">Descrição:</label>
-                <textarea id="descricao" name="descricao" rows="3"
-                    class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" required></textarea>
-            </div>
-            <!-- Valor Total -->
-            <div>
-                <label for="valor_total" class="block font-bold text-gray-700">Valor Total:</label>
-                <input id="valor_total" name="valor_total" step="0.01"
-                    class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" required>
-            </div>
-            <!-- Observações -->
-            <div>
-                <label for="observacoes" class="block font-bold text-gray-700">Observações:</label>
-                <textarea id="observacoes" name="observacao" rows="3"
-                    class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring"></textarea>
-            </div>
         </div>
 
         <!-- Produtos Utilizados -->
         <div class="mt-6 p-6 bg-white rounded shadow-md">
-            <h2 class="text-2xl font-bold mb-4">Seleção de produtos</h2>
+            <h2 class="text-2xl font-bold mb-4">Seleção de Produtos</h2>
             <!-- Produtos e Quantidades -->
             <div>
                 <label for="produto" class="block text-sm font-medium text-gray-700">Produtos:</label>
@@ -125,12 +95,35 @@
             </div>
         </div>
 
+        <!-- Valor da Mão de Obra -->
+        <div>
+            <label for="mao_obra" class="block font-bold text-gray-700">Valor Mão de Obra:</label>
+            <input id="mao_obra" name="mao_obra" step="0.01"
+                class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" required>
+        </div>
+        <!-- Descrição -->
+        <div>
+            <label for="descricao" class="block font-bold text-gray-700">Descrição:</label>
+            <textarea id="descricao" name="descricao" rows="3"
+                class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" required></textarea>
+        </div>
+        <!-- Valor Total -->
+        <div>
+            <label for="valor_total" class="block font-bold text-gray-700">Valor Total:</label>
+            <input id="valor_total" name="valor_total" step="0.01"
+                class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" required>
+        </div>
+        <!-- Observações -->
+        <div>
+            <label for="observacoes" class="block font-bold text-gray-700">Observações:</label>
+            <textarea id="observacoes" name="observacao" rows="3"
+                class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring"></textarea>
+        </div>
         <!-- Botões -->
         <div class="mt-6 flex justify-end space-x-2">
             <a href="/ordem_servico/" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Cancelar</a>
             <button id="btnSalvar" type="submit" class="bg-blue-500 text-white font-bold py-2 px-4 rounded">Salvar</button>
         </div>
-    </div>
     </form>
 </div>
 
@@ -148,7 +141,7 @@
             reader.onload = function (e) {
                 const img = document.createElement('img');
                 img.src = e.target.result;
-                img.className = 'w-32 h-128 object-cover rounded';
+                img.className = 'w-32 h-32 object-cover rounded';
                 preview.appendChild(img);
             };
 
@@ -167,7 +160,7 @@
         });
 
         $('#veiculo').select2({
-            placeholder: "Selecione um veiculo",
+            placeholder: "Selecione um veículo",
             allowClear: true,
             width: '100%'
         });

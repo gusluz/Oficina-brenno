@@ -45,101 +45,102 @@
                     <label class="block font-bold text-gray-700">Foto Antes:</label>
                     {% if ordem_servico.foto_inicio %}
                     <img src="{{ ordem_servico.foto_inicio.url }}" alt="Foto Antes"
-                        class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
+                        class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring mb-2">
                     {% endif %}
-                    <input type="file" name="foto_inicio" accept="image/*" multiple
+                    <input type="file" name="foto_inicio" accept="image/*" onchange="previewImage(event, 'previewAntes')"
                         class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
+                    <div id="previewAntes" class="mt-2 flex space-x-2"></div>
                 </div>
                 <!-- Fotos Depois -->
                 <div>
                     <label class="block font-bold text-gray-700">Foto Depois:</label>
                     {% if ordem_servico.foto_fim %}
                     <img src="{{ ordem_servico.foto_fim.url }}" alt="Foto Depois"
-                        class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
+                        class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring mb-2">
                     {% endif %}
-                    <input type="file" name="foto_fim" accept="image/*" multiple
+                    <input type="file" name="foto_fim" accept="image/*" onchange="previewImage(event, 'previewDepois')"
                         class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
+                    <div id="previewDepois" class="mt-2 flex space-x-2"></div>
                 </div>
+            </div>
 
-                <!-- Produtos Utilizados -->
-                <div class="p-6 max-w-4xl mx-auto bg-white rounded shadow-md">
-                    <h2 class="text-2xl font-bold mb-4">Seleção de produtos</h2>
+            <!-- Produtos Utilizados -->
+            <div class="p-6 bg-white rounded shadow-md mt-6">
+                <h2 class="text-2xl font-bold mb-4">Seleção de Produtos</h2>
 
-                    <!-- Produtos e Quantidades -->
-                    <div>
-                        <label for="produto" class="block text-sm font-medium text-gray-700">Produtos:</label>
-                        <div class="flex items-center space-x-2 mt-2">
-                            <select id="produto" name="produto[]"
-                                class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
-                                <option value="" disabled selected>Selecione um produto</option>
-                                {% for produto in produtos %}
-                                <option value="{{ produto.id }}" data-valor="{{ produto.valor_venda }}" data-qtd-atual="{{ produto.qtd_atual }}">{{ produto.nome }}</option>
-                                {% endfor %}
-                            </select>
-                            <input type="number" id="quantidade"
-                                class="w-24 p-2 border border-gray-300 rounded focus:outline-none focus:ring"
-                                placeholder="Qtd" min="1">
-                            <button type="button" id="adicionarProduto" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Adicionar</button>
-                        </div>
-                    </div>
-
-                    <!-- Tabela de Produtos Selecionados -->
-                    <div class="mt-4">
-                        <h3 class="text-lg font-bold mb-2">Produtos Selecionados</h3>
-                        <table class="w-full table-auto border border-gray-300">
-                            <thead class="bg-gray-100">
-                                <tr>
-                                    <th class="px-4 py-2 text-left border">Produto</th>
-                                    <th class="px-4 py-2 text-left border">Quantidade</th>
-                                    <th class="px-4 py-2 text-left border">Valor Unitário</th>
-                                    <th class="px-4 py-2 text-left border">Valor Total</th>
-                                    <th class="px-4 py-2 text-center border">Ações</th>
-                                </tr>
-                            </thead>
-                            <tbody id="listaProdutos" class="bg-white">
-                                {% for item in os_produtos %}
-                                <tr id="produto-{{ item.id }}" data-produto-id="{{ item.produto.id }}">
-                                    <td class="px-4 py-2 border">{{ item.produto.nome }}</td>
-                                    <td class="px-4 py-2 border text-center">{{ item.quantidade }}</td>
-                                    <td class="px-4 py-2 border text-center">{{ item.produto.valor_venda }}</td>
-                                    <td class="px-4 py-2 border text-center valor-total-produto">{{ item.valor_total }}</td>
-                                    <td class="px-4 py-2 text-center border">
-                                        <button type="button" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 remover">Remover</button>
-                                        <input type="hidden" name="produto[]" value="{{ item.produto.id }}">
-                                        <input type="hidden" name="quantidade[]" value="{{ item.quantidade }}">
-                                    </td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
+                <!-- Produtos e Quantidades -->
+                <div>
+                    <label for="produto" class="block text-sm font-medium text-gray-700">Produtos:</label>
+                    <div class="flex items-center space-x-2 mt-2">
+                        <select id="produto" name="produto[]"
+                            class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
+                            <option value="" disabled selected>Selecione um produto</option>
+                            {% for produto in produtos %}
+                            <option value="{{ produto.id }}" data-valor="{{ produto.valor_venda }}" data-qtd-atual="{{ produto.qtd_atual }}">{{ produto.nome }}</option>
+                            {% endfor %}
+                        </select>
+                        <input type="number" id="quantidade"
+                            class="w-24 p-2 border border-gray-300 rounded focus:outline-none focus:ring"
+                            placeholder="Qtd" min="1">
+                        <button type="button" id="adicionarProduto" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Adicionar</button>
                     </div>
                 </div>
 
+                <!-- Tabela de Produtos Selecionados -->
+                <div class="mt-4">
+                    <h3 class="text-lg font-bold mb-2">Produtos Selecionados</h3>
+                    <table class="w-full table-auto border border-gray-300">
+                        <thead class="bg-gray-100">
+                            <tr>
+                                <th class="px-4 py-2 text-left border">Produto</th>
+                                <th class="px-4 py-2 text-left border">Quantidade</th>
+                                <th class="px-4 py-2 text-left border">Valor Unitário</th>
+                                <th class="px-4 py-2 text-left border">Valor Total</th>
+                                <th class="px-4 py-2 text-center border">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="listaProdutos" class="bg-white">
+                            {% for item in os_produtos %}
+                            <tr id="produto-{{ item.id }}" data-produto-id="{{ item.produto.id }}">
+                                <td class="px-4 py-2 border">{{ item.produto.nome }}</td>
+                                <td class="px-4 py-2 border text-center">{{ item.quantidade }}</td>
+                                <td class="px-4 py-2 border text-center">{{ item.produto.valor_venda }}</td>
+                                <td class="px-4 py-2 border text-center valor-total-produto">{{ item.valor_total }}</td>
+                                <td class="px-4 py-2 text-center border">
+                                    <button type="button" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 remover">Remover</button>
+                                    <input type="hidden" name="produto[]" value="{{ item.produto.id }}">
+                                    <input type="hidden" name="quantidade[]" value="{{ item.quantidade }}">
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
 
-                <!-- Valor da Mão de Obra -->
-                <div>
-                    <label for="mao_obra" class="block font-bold text-gray-700">Valor Mão de Obra:</label>
-                    <input id="mao_obra" name="mao_obra" step="0.01" value="{{ ordem_servico.mao_obra }}"
-                        class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
-                </div>
-                <!-- Descrição -->
-                <div>
-                    <label for="descricao" class="block font-bold text-gray-700">Descrição:</label>
-                    <textarea id="descricao" name="descricao" rows="3"
-                        class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">{{ ordem_servico.descricao }}</textarea>
-                </div>
-                <!-- Valor Total -->
-                <div>
-                    <label for="valor_total" class="block font-bold text-gray-700">Valor Total:</label>
-                    <input id="valor_total" name="valor_total" step="0.01" value="{{ ordem_servico.valor_total }}"
-                        class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
-                </div>
-                <!-- Observações -->
-                <div>
-                    <label for="observacoes" class="block font-bold text-gray-700">Observações:</label>
-                    <textarea id="observacoes" name="observacao" rows="3"
-                        class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">{{ ordem_servico.observacao }}</textarea>
-                </div>
+            <!-- Valor da Mão de Obra -->
+            <div class="mt-6">
+                <label for="mao_obra" class="block font-bold text-gray-700">Valor Mão de Obra:</label>
+                <input id="mao_obra" name="mao_obra" step="0.01" value="{{ ordem_servico.mao_obra }}"
+                    class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
+            </div>
+            <!-- Descrição -->
+            <div>
+                <label for="descricao" class="block font-bold text-gray-700">Descrição:</label>
+                <textarea id="descricao" name="descricao" rows="3"
+                    class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">{{ ordem_servico.descricao }}</textarea>
+            </div>
+            <!-- Valor Total -->
+            <div>
+                <label for="valor_total" class="block font-bold text-gray-700">Valor Total:</label>
+                <input id="valor_total" name="valor_total" step="0.01" value="{{ ordem_servico.valor_total }}"
+                    class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
+            </div>
+            <!-- Observações -->
+            <div>
+                <label for="observacoes" class="block font-bold text-gray-700">Observações:</label>
+                <textarea id="observacoes" name="observacao" rows="3"
+                    class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">{{ ordem_servico.observacao }}</textarea>
             </div>
             <!-- Botões -->
             <div class="mt-6 flex justify-end space-x-2">
@@ -151,26 +152,45 @@
     </div>
 </div>
 
+<script>
+    // Função para pré-visualizar imagens
+    function previewImage(event, previewId) {
+        const preview = document.getElementById(previewId);
+        preview.innerHTML = '';
+        const files = event.target.files;
+
+        for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                const img = document.createElement('img');
+                img.src = e.target.result;
+                img.className = 'w-16 h-16 object-cover rounded';
+                preview.appendChild(img);
+            };
+
+            reader.readAsDataURL(file);
+        }
+    }
+</script>
 
 <script>
     $(document).ready(function () {
         $('#cliente').select2({
             placeholder: "Selecione um cliente",
-            allowClear: true,  // Adiciona um botão "limpar"
-            width: '100%'      // Garante que o dropdown se ajuste ao contêiner
+            allowClear: true,
+            width: '100%'
         });
-    });
-</script>
-<script>
-    $(document).ready(function () {
+
         $('#veiculo').select2({
-            placeholder: "Selecione um veiculo",
-            allowClear: true,  // Adiciona um botão "limpar"
-            width: '100%'      // Garante que o dropdown se ajuste ao contêiner
+            placeholder: "Selecione um veículo",
+            allowClear: true,
+            width: '100%'
         });
     });
 </script>
-<!-- Script para funcionalidade -->
+
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const listaProdutos = document.getElementById('listaProdutos');
@@ -180,17 +200,6 @@
 
         const maoObraInput = document.getElementById('mao_obra');
         const valorTotalInput = document.getElementById('valor_total');
-
-        // Função para substituir vírgulas por pontos
-        function replaceCommaWithDot(input) {
-            if (input) {
-                input.value = input.value.replace(',', '.');
-            }
-        }
-
-        // Executar a função ao carregar a página
-        replaceCommaWithDot(maoObraInput);
-        replaceCommaWithDot(valorTotalInput);
 
         // Função para criar a linha da tabela
         function criarLinhaTabela(produtoNome, quantidade, valorUnitario, produtoId) {
@@ -206,8 +215,6 @@
                     <button class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 remover">Remover</button>
                     <input type="hidden" name="produto[]" value="${produtoId}">
                     <input type="hidden" name="quantidade[]" value="${quantidade}">
-                    <input type="hidden" name="valor_unitario[]" value="${valorUnitario}">
-                    <input type="hidden" name="valor_total[]" value="${valorTotal}">
                 </td>
             `;
 
