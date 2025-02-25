@@ -1,3 +1,5 @@
+from django.utils import timezone
+
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
@@ -7,6 +9,7 @@ from django.views.generic import (
     CreateView,
     UpdateView,
     DeleteView,
+    View,
 )
 from .models import OS, OSProduto
 from .forms import OSForm, OSProdutoForm
@@ -24,8 +27,8 @@ class OSListView(ListView):
         queryset = super().get_queryset()
         search_query = self.request.GET.get("search", "")
         if search_query:
-            # Usando o campo cliente_nome diretamente
-            queryset = queryset.filter(cliente_nome__icontains=search_query)
+            # Usando o campo codigo da OS diretamente
+            queryset = queryset.filter(id__icontains=search_query)
         return queryset
 
 
@@ -33,6 +36,14 @@ class OSDetailView(DetailView):
     model = OS
     template_name = "os_detail.html"
     context_object_name = "ordem_servico"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        os_produtos = context["ordem_servico"].os_produtos.all()
+        for item in os_produtos:
+            item.valor_total = item.quantidade * item.produto.valor_venda
+        context["os_produtos"] = os_produtos
+        return context
 
 
 class OSCreateView(CreateView):
@@ -121,9 +132,14 @@ class OSUpdateView(UpdateView):
         context["veiculos"] = Veiculo.objects.all()
         context["produtos"] = Produto.objects.all()
         context["produtos_form"] = OSProdutoForm(instance=self.object)
-        context["ordem_servico"] = (
-            self.get_object()
-        )  # Certifique-se que isso retorna a instância correta
+        context["ordem_servico"] = self.get_object()
+
+        # Calcular o valor total para cada produto
+        os_produtos = context["ordem_servico"].os_produtos.all()
+        for item in os_produtos:
+            item.valor_total = item.quantidade * item.produto.valor_venda
+
+        context["os_produtos"] = os_produtos
         return context
 
 
@@ -131,3 +147,11 @@ class OSDeleteView(DeleteView):
     model = OS
     template_name = "os_confirm_delete.html"
     success_url = reverse_lazy("os_list")
+
+
+class OSCompleteView(View):
+    def get(self, request, pk):
+        os = get_object_or_404(OS, id=pk)
+        os.data_fim = timezone.now()
+        os.save()
+        return redirect("os_list")

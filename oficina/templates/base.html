@@ -6,37 +6,160 @@
     <title>{% block title %}Minha Aplicação{% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    {% block head %}{% endblock  %}
+    <style>
+        #sidebar.closed span {
+            display: none;
+        }
+        #sidebar.closed a {
+            justify-content: center; /* Centraliza os ícones */
+        }
+        #sidebar.closed i {
+            margin: 0; /* Remove espaçamento lateral dos ícones */
+        }
+        .transition-width {
+            transition: width 0.3s ease, margin-left 0.3s ease;
+        }
+    </style>
+    {% block head %}{% endblock %}
 </head>
 <body>
-{% if user.is_authenticated %}
+    {% if user.is_authenticated %}
     <div id="app" class="flex">
         <!-- Inclui a Sidebar -->
         {% include 'sidebar.html' %}
 
         <!-- Conteúdo Principal -->
-        <div :class="sidebarOpen ? 'ml-64' : 'ml-16'" class="flex-1 max-h-px w-screen bg-gray-100  transition-all duration-300">
+        <div id="mainContent" class="flex-1 max-h-px w-screen bg-gray-100 transition-width ml-64">
             {% block content %}
             {% endblock %}
-
-{% else %}
-<p>Você não está logado, por favor faça Login</p>
-<a href="{% url 'login' %}">Login</a>
-    
-{% endif %}
         </div>
     </div>
+    {% else %}
+    <!DOCTYPE html>
+    <html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Ciclo Motos - Oficina Especializada</title>
+        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+        <style>
+            .hero {
+                background-image: url('/media/images/moto.jpg'); /* Imagem de fundo */
+                background-size: cover;
+                background-position: center;
+            }
+            .btn-primary {
+                background-color: #4F46E5; /* Roxo mais escuro */
+                transition: background-color 0.3s ease;
+            }
+            .btn-primary:hover {
+                background-color: #4338CA; /* Roxo mais escuro no hover */
+            }
+            .btn-secondary {
+                background-color: #10B981; /* Verde */
+                transition: background-color 0.3s ease;
+            }
+            .btn-secondary:hover {
+                background-color: #059669; /* Verde mais escuro no hover */
+            }
+        </style>
+    </head>
+    <body class="bg-gray-100">
+        <!-- Seção Hero -->
+        <div class="hero min-h-screen flex flex-col justify-center items-center text-center text-white">
+            <div class="bg-black bg-opacity-50 p-8 rounded-lg">
+                <h1 class="text-5xl font-bold mb-4">Ciclo Motos</h1>
+                <p class="text-xl mb-8">Sua oficina especializada em manutenção de motos. Qualidade e confiança em cada serviço.</p>
+                <div class="space-x-4">
+                    <a href="{% url 'login' %}" class="btn-primary py-3 px-6 rounded-lg text-white font-bold">LOGIN</a>
+                    <a href="{% url 'register' %}" class="btn-secondary py-3 px-6 rounded-lg text-white font-bold">CADASTRO</a>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Seção Serviços -->
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center mb-8">Nossos Serviços</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-gray-100 p-6 rounded-lg shadow-lg text-center">
+                        <i class="fas fa-tools text-4xl text-blue-500 mb-4"></i>
+                        <h3 class="text-xl font-bold mb-2">Manutenção Preventiva</h3>
+                        <p class="text-gray-600">Garanta o bom funcionamento da sua moto com nossos serviços de manutenção preventiva.</p>
+                    </div>
+                    <div class="bg-gray-100 p-6 rounded-lg shadow-lg text-center">
+                        <i class="fas fa-wrench text-4xl text-green-500 mb-4"></i>
+                        <h3 class="text-xl font-bold mb-2">Reparos Especializados</h3>
+                        <p class="text-gray-600">Reparos de alta qualidade para deixar sua moto como nova.</p>
+                    </div>
+                    <div class="bg-gray-100 p-6 rounded-lg shadow-lg text-center">
+                        <i class="fas fa-cogs text-4xl text-yellow-500 mb-4"></i>
+                        <h3 class="text-xl font-bold mb-2">Personalização</h3>
+                        <p class="text-gray-600">Personalize sua moto com nossos serviços exclusivos.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    
+        <!-- Seção Depoimentos -->
+        <section class="py-16 bg-gray-800 text-white">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center mb-8">Depoimentos de Clientes</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-gray-700 p-6 rounded-lg shadow-lg">
+                        <p class="mb-4">"Melhor oficina que já levei minha moto! Atendimento excelente e serviços de alta qualidade."</p>
+                        <p class="font-bold">João Silva</p>
+                    </div>
+                    <div class="bg-gray-700 p-6 rounded-lg shadow-lg">
+                        <p class="mb-4">"Minha experiência com a Ciclo Motos foi incrível. Recomendo a todos os amantes de motos!"</p>
+                        <p class="font-bold">Maria Oliveira</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    
+        <!-- Rodapé -->
+        <footer class="py-8 bg-gray-900 text-white text-center">
+            <p>&copy; 2025 Ciclo Motos. Todos os direitos reservados.</p>
+        </footer>
+    </body>
+    </html>
+
+    {% endif %}
 
     <script>
-        new Vue({
-            el: '#app',
-            data: {
-                sidebarOpen: true
-            }
+        document.addEventListener('DOMContentLoaded', function () {
+            const sidebar = document.getElementById('sidebar'); // Sidebar
+            const mainContent = document.getElementById('mainContent'); // Conteúdo principal
+            const toggleButton = document.getElementById('sidebarToggle'); // Botão de toggle
+            const sidebarIcon = document.getElementById('sidebarIcon'); // Ícone do botão
+
+            let sidebarOpen = true; // Estado inicial da sidebar
+
+            toggleButton.addEventListener('click', function () {
+                sidebarOpen = !sidebarOpen;
+
+                if (sidebarOpen) {
+                    sidebar.classList.remove('closed');
+                    sidebar.classList.remove('w-16');
+                    sidebar.classList.add('w-64');
+                    mainContent.classList.remove('ml-16');
+                    mainContent.classList.add('ml-64');
+                    sidebarIcon.classList.remove('fa-bars');
+                    sidebarIcon.classList.add('fa-times');
+                } else {
+                    sidebar.classList.add('closed');
+                    sidebar.classList.remove('w-64');
+                    sidebar.classList.add('w-16');
+                    mainContent.classList.remove('ml-64');
+                    mainContent.classList.add('ml-16');
+                    sidebarIcon.classList.remove('fa-times');
+                    sidebarIcon.classList.add('fa-bars');
+                }
+            });
         });
     </script>
 </body>
 </html>
-

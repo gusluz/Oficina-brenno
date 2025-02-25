@@ -4,7 +4,7 @@
 
 {% block content %}
 
-<div class="w-full max-w-4xl bg-white rounded shadow-md p-6">
+<div class="w-full max-w-4xl bg-white mx-auto rounded shadow-md p-6">
     <h2 class="text-xl font-bold mb-6 text-center">Cadastro de Fornecedor</h2>
     <!-- Formulário de Cadastro -->
     <form  method="POST">
@@ -13,17 +13,17 @@
             <!-- Nome -->
             <div>
                 <label for="nome" class="block font-bold text-gray-700">Nome:</label>
-                <input type="text" id="nome" name="nome" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
+                <input type="text" id="nome" name="nome" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" required/>
             </div>
             <!-- CPF -->
             <div>
                 <label for="cpf" class="block font-bold text-gray-700">CPF/CNPJ:</label>
-                <input type="text" id="cpf/cnpj" name="cpf_cnpj" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
+                <input type="text" id="cpf/cnpj" name="cpf_cnpj" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" required/>
             </div>
             <!-- Telefone 1 -->
             <div>
                 <label for="telefone1" class="block font-bold text-gray-700">Telefone 1:</label>
-                <input type="tel" id="telefone1" name="telefone" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
+                <input type="tel" id="telefone1" name="telefone" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" required/>
             </div>
             <!-- Telefone 2 -->
             <div>
@@ -33,37 +33,37 @@
             <!-- Email -->
             <div>
                 <label for="email" class="block font-bold text-gray-700">Email:</label>
-                <input type="email" id="email" name="email" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
+                <input type="email" id="email" name="email" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" required/>
             </div>
             <!-- CEP -->
             <div>
                 <label for="cep" class="block font-bold text-gray-700">CEP:</label>
-                <input type="text" id="cep" name="endereco_cep" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
+                <input type="text" id="cep" name="endereco_cep" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" required/>
             </div>
             <!-- Endereço -->
             <div>
                 <label for="endereco" class="block font-bold text-gray-700">Endereço:</label>
-                <input type="text" id="endereco" name="endereco" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
+                <input type="text" id="endereco" name="endereco" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" required/>
             </div>
             <!-- Número -->
             <div>
                 <label for="numero" class="block font-bold text-gray-700">Número:</label>
-                <input type="text" id="numero" name="endereco_numero" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
+                <input type="text" id="numero" name="endereco_numero" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" required/>
             </div>
             <!-- Bairro -->
             <div>
                 <label for="bairro" class="block font-bold text-gray-700">Bairro:</label>
-                <input type="text" id="bairro" name="endereco_bairro" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
+                <input type="text" id="bairro" name="endereco_bairro" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" required/>
             </div>
             <!-- Cidade -->
             <div>
                 <label for="cidade" class="block font-bold text-gray-700">Cidade:</label>
-                <input type="text" id="cidade" name="endereco_cidade" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
+                <input type="text" id="cidade" name="endereco_cidade" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" required/>
             </div>
             <!-- Estado -->
             <div>
                 <label for="estado" class="block font-bold text-gray-700">Estado:</label>
-                <select id="estado" name="endereco_estado" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
+                <select id="estado" name="endereco_estado" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring" required/>
                     <option value="" disabled selected>Selecione um estado</option>
                     <option>AC</option>
                     <option>AL</option>
@@ -105,13 +105,58 @@
                 <textarea id="observacoes" name="observacao" rows="4" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring"></textarea>
             </div>
         </div>
+        <!-- Botões -->
+        <div class="mt-6 flex justify-end space-x-2">
+            <a href="/fornecedor/" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Cancelar</a>
         <!-- Botão Salvar -->
-        <div class="mt-6 flex justify-end">
-            <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                Salvar
-            </button>
-        </div>
+    <button id="btnSalvar" type="submit" class="bg-blue-500 text-white font-bold py-2 px-4 rounded">Salvar</button>
+    </div>
     </form>
 </div>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.querySelector("form");
+        const btnSalvar = document.getElementById("btnSalvar");
+
+        btnSalvar.addEventListener("click", (e) => {
+            e.preventDefault(); // Impede o envio imediato do formulário
+
+            let isValid = true;
+            const inputs = form.querySelectorAll("input[required], select[required], textarea[required]");
+
+            inputs.forEach((input) => {
+                const parentDiv = input.closest("div");
+
+                if (!input.value.trim()) {
+                    // Adiciona borda vermelha ao campo vazio
+                    input.classList.add("border-red-500");
+
+                    // Remove mensagens duplicadas
+                    let error = parentDiv.querySelector(".text-red-500");
+                    if (!error) {
+                        error = document.createElement("p");
+                        error.className = "text-red-500 text-sm mt-1";
+                        error.textContent = "Este campo é obrigatório.";
+                        parentDiv.appendChild(error);
+                    }
+
+                    isValid = false;
+                } else {
+                    // Remove aviso se o campo for preenchido
+                    input.classList.remove("border-red-500");
+                    const error = parentDiv.querySelector(".text-red-500");
+                    if (error) {
+                        error.remove();
+                    }
+                }
+            });
+
+            // Somente submete o formulário se tudo estiver preenchido
+            if (isValid) {
+                form.submit();
+            }
+        });
+    });
+</script>
 {% endblock %}

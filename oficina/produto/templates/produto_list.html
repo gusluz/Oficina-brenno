@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-  <div class="w-full max-w-5xl bg-white rounded shadow-md p-6">
+<div class="w-full max-w-full md:max-w-5xl lg:max-w-7xl mx-auto bg-white rounded shadow-md p-6">
     <h2 class="text-xl font-bold mb-6 text-center">Gerenciamento de Produtos</h2>
 
     <!-- Botões de Ação -->
@@ -22,7 +22,7 @@
       <table class="table-auto w-full text-left bg-gray-100 border rounded-lg">
         <thead class="bg-gray-50">
           <tr class="bg-gray-200">
-            <th class="px-4 py-2">Código</th>
+            <th class="px-4 py-2">ID</th>
             <th class="px-4 py-2">Nome</th>
             <th class="px-4 py-2">Quantidade Atual</th>
             <th class="px-4 py-2">Custo Final</th>
@@ -35,7 +35,7 @@
         <tbody>
           {% for produto in produtos %}
             <tr class="border-t">
-              <td class="px-4 py-2">{{ produto.codigo }}</td>
+              <td class="px-4 py-2">{{ produto.id }}</td>
               <td class="px-4 py-2">{{ produto.nome }}</td>
               <td class="px-4 py-2">{{ produto.qtd_atual }}</td>
               <td class="px-4 py-2">R$ {{ produto.custo_final }}</td>

@@ -1,11 +1,9 @@
 {% extends 'base.html' %}
 
-{% block title %}
-
-{% endblock %}
+{% block title %}Editar Produto{% endblock %}
 
 {% block content %}
-  <div class="w-full max-w-4xl bg-white rounded shadow-md p-6">
+<div class="w-full max-w-4xl bg-white mx-auto rounded shadow-md p-6">
     <h2 class="text-xl font-bold mb-6 text-center">Editar Produto</h2>
 
     {% if form.errors %}
@@ -19,7 +17,6 @@
         </ul>
       </div>
     {% endif %}
-
 
     <!-- Formulário de Cadastro -->
     <form method="POST">
@@ -37,11 +34,6 @@
             {% endfor %}
           </select>
         </div>
-        <!-- Código -->
-        <div>
-          <label class="block font-bold text-gray-700">Código:</label>
-          <input type="text" name="codigo" value="{{ produto.codigo }}" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-blue-500" />
-        </div>
         <!-- Nome -->
         <div>
           <label class="block font-bold text-gray-700">Nome:</label>
@@ -55,27 +47,27 @@
         <!-- Valor -->
         <div>
           <label class="block font-bold text-gray-700">Valor:</label>
-          <input type="number" step="0.01" name="valor" value="{{ produto.valor }}" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          <input step="0.01" name="valor" id="valor" value="{{ produto.valor }}" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-blue-500" />
         </div>
         <!-- Outras Despesas -->
         <div>
           <label class="block font-bold text-gray-700">Outras Despesas:</label>
-          <input type="number" step="0.01" name="outras_despesas" value="{{ produto.outras_despesas }}" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          <input step="0.01" name="outras_despesas" id="outras_despesas" value="{{ produto.outras_despesas }}" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-blue-500" />
         </div>
         <!-- Custo Final -->
         <div>
           <label class="block font-bold text-gray-700">Custo Final:</label>
-          <input type="number" step="0.01" name="custo_final" value="{{ produto.custo_final }}" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          <input step="0.01" name="custo_final" id="custo_final" value="{{ produto.custo_final }}" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-blue-500" />
         </div>
         <!-- Lucro -->
         <div>
           <label class="block font-bold text-gray-700">Lucro:</label>
-          <input type="number" step="0.01" name="lucro" value="{{ produto.lucro }}" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          <input step="0.01" name="lucro" id="lucro" value="{{ produto.lucro }}" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-blue-500" />
         </div>
         <!-- Valor de Venda -->
         <div>
           <label class="block font-bold text-gray-700">Valor de Venda:</label>
-          <input type="number" step="0.01" name="valor_venda" value="{{ produto.valor_venda }}" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          <input step="0.01" name="valor_venda" id="valor_venda" value="{{ produto.valor_venda }}" class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-blue-500" />
         </div>
         <!-- Quantidade Mínima -->
         <div>
@@ -100,4 +92,29 @@
       </div>
     </form>
   </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Função para substituir vírgulas por pontos
+        function replaceCommaWithDot(input) {
+            if (input) {
+                input.value = input.value.replace(',', '.');
+            }
+        }
+
+        // Executar a função ao carregar a página
+        const valorInput = document.getElementById('valor');
+        const outrasDespesasInput = document.getElementById('outras_despesas');
+        const custoFinalInput = document.getElementById('custo_final');
+        const lucroInput = document.getElementById('lucro');
+        const valorVendaInput = document.getElementById('valor_venda');
+
+        replaceCommaWithDot(valorInput);
+        replaceCommaWithDot(outrasDespesasInput);
+        replaceCommaWithDot(custoFinalInput);
+        replaceCommaWithDot(lucroInput);
+        replaceCommaWithDot(valorVendaInput);
+    });
+</script>
+
 {% endblock %}

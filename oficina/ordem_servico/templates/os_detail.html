@@ -4,7 +4,7 @@
 
 {% block content %}
 
-<div class="flex flex-col h-screen bg-gray-100 p-6">
+<div class="w-full max-w-4xl bg-white mx-auto rounded shadow-md p-6">
     <div class="max-w-5xl bg-white rounded shadow-md p-6">
         <h2 class="text-xl font-bold mb-6 text-center">Visualizar Ordem de Serviço</h2>
         <div class="grid grid-cols-2 gap-4">
@@ -40,14 +40,20 @@
                     class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
                 {% endif %}
             </div>
-            <!-- Código -->
+            <!-- Data inicio -->
             <div>
-                <label for="codigo" class="block font-bold text-gray-700">Código:</label>
+                <label for="data_inicio" class="block font-bold text-gray-700">Data do Inicio:</label>
                 <div class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring bg-gray-100">
-                    {{ ordem_servico.codigo }}
+                    {{ ordem_servico.data_inicio }}
                 </div>
             </div>
-
+            <!-- Data fim -->
+            <div>
+                <label for="data_fim" class="block font-bold text-gray-700">Data da Entrega:</label>
+                <div class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring bg-gray-100">
+                    {{ ordem_servico.data_fim }}
+                </div>
+            </div>
             <!-- Produtos Utilizados -->
             <div class="p-6 max-w-4xl mx-auto bg-white rounded shadow-md">
                 <h2 class="text-2xl font-bold mb-4">Produtos Utilizados</h2>
@@ -59,13 +65,17 @@
                             <tr>
                                 <th class="px-4 py-2 text-left border">Produto</th>
                                 <th class="px-4 py-2 text-left border">Quantidade</th>
+                                <th class="px-4 py-2 text-left border">Valor Unitário</th>
+                                <th class="px-4 py-2 text-left border">Valor Total</th>
                             </tr>
                         </thead>
                         <tbody id="listaProdutos" class="bg-white">
-                            {% for item in ordem_servico.os_produtos.all %}
+                            {% for item in os_produtos %}
                             <tr>
                                 <td class="px-4 py-2 border">{{ item.produto.nome }}</td>
                                 <td class="px-4 py-2 border text-center">{{ item.quantidade }}</td>
+                                <td class="px-4 py-2 border text-center">{{ item.produto.valor_venda }}</td>
+                                <td class="px-4 py-2 border text-center">{{ item.valor_total }}</td>
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -101,7 +111,10 @@
                     {{ ordem_servico.observacao }}
                 </div>
             </div>
-
+            <!-- Botão Voltar -->
+            <div class="mt-6 flex justify-end">
+                <a href="/ordem_servico" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Voltar</a>
+            </div>
         </div>
     </div>
 </div>

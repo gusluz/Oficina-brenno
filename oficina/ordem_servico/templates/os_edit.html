@@ -4,7 +4,7 @@
 
 {% block content %}
 
-<div class="flex flex-col h-screen bg-gray-100 p-6">
+<div class="w-full max-w-4xl bg-white mx-auto rounded shadow-md p-6">
     <div class="max-w-5xl bg-white rounded shadow-md p-6">
         <h2 class="text-xl font-bold mb-6 text-center">Editar Ordem de Serviço</h2>
         <form method="POST" enctype="multipart/form-data" class="flex-grow flex flex-col space-y-4">
@@ -60,12 +60,6 @@
                     <input type="file" name="foto_fim" accept="image/*" multiple
                         class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
                 </div>
-                <!-- Código -->
-                <div>
-                    <label for="codigo" class="block font-bold text-gray-700">Código:</label>
-                    <input type="text" id="codigo" name="codigo" value="{{ ordem_servico.codigo }}"
-                        class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
-                </div>
 
                 <!-- Produtos Utilizados -->
                 <div class="p-6 max-w-4xl mx-auto bg-white rounded shadow-md">
@@ -79,14 +73,13 @@
                                 class="w-full py-2 px-3 border rounded-lg shadow focus:outline-none focus:ring">
                                 <option value="" disabled selected>Selecione um produto</option>
                                 {% for produto in produtos %}
-                                <option value="{{ produto.id }}">{{ produto.nome }}</option>
+                                <option value="{{ produto.id }}" data-valor="{{ produto.valor_venda }}" data-qtd-atual="{{ produto.qtd_atual }}">{{ produto.nome }}</option>
                                 {% endfor %}
                             </select>
                             <input type="number" id="quantidade"
                                 class="w-24 p-2 border border-gray-300 rounded focus:outline-none focus:ring"
                                 placeholder="Qtd" min="1">
-                            <button type="button" id="adicionarProduto"
-                                class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Adicionar</button>
+                            <button type="button" id="adicionarProduto" class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Adicionar</button>
                         </div>
                     </div>
 
@@ -98,14 +91,18 @@
                                 <tr>
                                     <th class="px-4 py-2 text-left border">Produto</th>
                                     <th class="px-4 py-2 text-left border">Quantidade</th>
+                                    <th class="px-4 py-2 text-left border">Valor Unitário</th>
+                                    <th class="px-4 py-2 text-left border">Valor Total</th>
                                     <th class="px-4 py-2 text-center border">Ações</th>
                                 </tr>
                             </thead>
                             <tbody id="listaProdutos" class="bg-white">
-                                {% for item in ordem_servico.os_produtos.all %}
+                                {% for item in os_produtos %}
                                 <tr id="produto-{{ item.id }}" data-produto-id="{{ item.produto.id }}">
                                     <td class="px-4 py-2 border">{{ item.produto.nome }}</td>
                                     <td class="px-4 py-2 border text-center">{{ item.quantidade }}</td>
+                                    <td class="px-4 py-2 border text-center">{{ item.produto.valor_venda }}</td>
+                                    <td class="px-4 py-2 border text-center valor-total-produto">{{ item.valor_total }}</td>
                                     <td class="px-4 py-2 text-center border">
                                         <button type="button" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 remover">Remover</button>
                                         <input type="hidden" name="produto[]" value="{{ item.produto.id }}">
@@ -145,7 +142,8 @@
                 </div>
             </div>
             <!-- Botões -->
-            <div class="mt-6 flex justify-end">
+            <div class="mt-6 flex justify-end space-x-2">
+                <a href="/ordem_servico/" class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Cancelar</a>
                 <button type="submit"
                     class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Salvar</button>
             </div>
@@ -182,6 +180,7 @@
 
         const maoObraInput = document.getElementById('mao_obra');
         const valorTotalInput = document.getElementById('valor_total');
+
         // Função para substituir vírgulas por pontos
         function replaceCommaWithDot(input) {
             if (input) {
@@ -194,57 +193,94 @@
         replaceCommaWithDot(valorTotalInput);
 
         // Função para criar a linha da tabela
-        function criarLinhaTabela(produtoNome, quantidade, produtoId) {
+        function criarLinhaTabela(produtoNome, quantidade, valorUnitario, produtoId) {
+            const valorUnitarioNumerico = parseFloat(valorUnitario.replace(',', '.'));
+            const valorTotal = (quantidade * valorUnitarioNumerico).toFixed(2);
             const tr = document.createElement('tr');
-            tr.setAttribute('data-produto-id', produtoId);
-
             tr.innerHTML = `
                 <td class="px-4 py-2 border">${produtoNome}</td>
                 <td class="px-4 py-2 border text-center">${quantidade}</td>
+                <td class="px-4 py-2 border text-center">${valorUnitario}</td>
+                <td class="px-4 py-2 border text-center valor-total-produto">${valorTotal}</td>
                 <td class="px-4 py-2 text-center border">
-                    <button type="button" class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 remover">Remover</button>
+                    <button class="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 remover">Remover</button>
                     <input type="hidden" name="produto[]" value="${produtoId}">
                     <input type="hidden" name="quantidade[]" value="${quantidade}">
+                    <input type="hidden" name="valor_unitario[]" value="${valorUnitario}">
+                    <input type="hidden" name="valor_total[]" value="${valorTotal}">
                 </td>
             `;
 
-            // Adicionar funcionalidade de remover
             tr.querySelector('.remover').addEventListener('click', () => {
                 tr.remove();
+                calcularValorTotal();
             });
 
             return tr;
         }
 
-        // Adicionar funcionalidade de remover para linhas existentes
-        listaProdutos.querySelectorAll('.remover').forEach(button => {
-            button.addEventListener('click', (event) => {
-                const tr = event.target.closest('tr');
-                tr.remove();
+        function calcularValorTotal() {
+            let totalProdutos = 0;
+            const linhas = listaProdutos.querySelectorAll('tr');
+            linhas.forEach(linha => {
+                const valorTotalProduto = parseFloat(linha.querySelector('.valor-total-produto').textContent);
+                totalProdutos += valorTotalProduto;
             });
-        });
+
+            const valorMaoObra = parseFloat(maoObraInput.value.replace(',', '.')) || 0;
+            const valorTotal = (totalProdutos + valorMaoObra).toFixed(2);
+            valorTotalInput.value = valorTotal;
+        }
 
         adicionarProduto.addEventListener('click', () => {
             const produtoOption = produtoSelect.options[produtoSelect.selectedIndex];
             const produtoId = produtoOption.value;
             const produtoNome = produtoOption.text;
             const quantidade = quantidadeInput.value;
+            const valorUnitario = produtoOption.getAttribute('data-valor');
+            const qtdAtual = produtoOption.getAttribute('data-qtd-atual');
 
             if (!produtoId || !quantidade || quantidade <= 0) {
                 alert('Por favor, selecione um produto e insira uma quantidade válida.');
                 return;
             }
 
-            const novaLinha = criarLinhaTabela(produtoNome, quantidade, produtoId);
+            if (parseInt(qtdAtual) <= 0) {
+                alert('Este produto está fora de estoque.');
+                return;
+            }
+
+            const novaLinha = criarLinhaTabela(produtoNome, quantidade, valorUnitario, produtoId);
             listaProdutos.appendChild(novaLinha);
 
-            // Limpar campos após adicionar
             produtoSelect.value = '';
             quantidadeInput.value = '';
+
+            calcularValorTotal();
         });
 
-    });
+        maoObraInput.addEventListener('input', calcularValorTotal);
 
+        // Adicionar evento de clique para os botões de remover dos produtos carregados inicialmente
+        listaProdutos.querySelectorAll('.remover').forEach(button => {
+            button.addEventListener('click', (event) => {
+                event.preventDefault();
+                const tr = event.target.closest('tr');
+                tr.remove();
+                calcularValorTotal();
+            });
+        });
+
+        // Calcular o valor total ao carregar a página
+        calcularValorTotal();
+    });
 </script>
+
+<style>
+    .remover, #adicionarProduto {
+        position: relative;
+        z-index: 10;
+    }
+</style>
 
 {% endblock %}
