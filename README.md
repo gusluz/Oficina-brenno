@@ -19,31 +19,47 @@ Este projeto consiste em um sistema de gerenciamento de oficina, facilitando o c
 ## Como Executar
 
 1. Clone o repositório:
-
 ```
 git clone https://github.com/gusluz/Gerencia-Oficina.git
 ```
 
 2. Navegue até o diretório do projeto:
-
 ```
 cd Gerencia-Oficina
 ```
 
-3. Instale as dependências necessárias:
+3. Crie um ambiente virtual para evitar a instalação global das dependências:
+```
+python -m venv venv
+```
 
+4. Ative o ambiente virtual:
+- No Windows:
+```
+venv\Scripts\activate
+```
+- No macOS e Linux:
+```
+source venv/bin/activate
+```
+
+5. Instale as dependências necessárias:
 ```
 pip install -r requirements.txt
 ```
 
-4. Execute as migrações do banco de dados:
-
+6. Navege para 'oficina' e execute as migrações do banco de dados:
 ```
+cd oficina
 python manage.py migrate
 ```
 
-5. Inicie o servidor:
-
+7. Inicie o servidor:
 ```
 python manage.py runserver
 ```
+
+8. Crie um usuario:
+- teste@teste.com
+- Tt123456
+
